@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+# Further Statistical Analysis in R
 
-You can use the [editor on GitHub](https://github.com/bioinformatics-core-shared-training/further-stats-in-R/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Description
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The course will cover linear regression, ANOVA and non-parametric ANOVA. It will be a mixture of lectures and hands-on time using RStudio to analyse data.  By the end of this course you should be able to:
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+# Aims: During this course you will learn about: 
 
-```markdown
-Syntax highlighted code block
+- ANOVA
+- Assessing correlation between two variables
+- Simple and multiple regression
+- Generalised Linear Models
 
-# Header 1
-## Header 2
-### Header 3
+# Objectives: After this course you should be able to
 
-- Bulleted
-- List
+- Select an appropriate test for analysing data
+- Analyse data using linear regression
+- Check the assumptions of linear regression are met by the data
+- Check the fit of the linear regression model to your data
+- Know when linear regression is not appropriate and have an idea of which alternative method might be appropriate
+- Know how to check that the ANOVA assumptions are met by the data
+- Analyse data using non-parametric ANOVA
+- Know when you need to seek help with analysis as the data structure is too complex for the methods taught
 
-1. Numbered
-2. List
+# Pre-requisites
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/bioinformatics-core-shared-training/further-stats-in-R/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+ This course assumes basic knowledge of statistics and use of R, which would be obtained from our Introductory Statistics Course and an "Introduction to R for Solving Biological Problems" run at the Genetics department (or equivalent).
+ 
+ - [Introduction to Solving Biological Problems with R](http://cambiotraining.github.io/r-intro/)
+ - [Introduction to Statistical Analysis](http://bioinformatics-core-shared-training.github.io/IntroductionToStats/)
