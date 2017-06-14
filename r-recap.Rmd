@@ -10,7 +10,17 @@ output:
 
 # Introduction
 
+The purpose
 
+- Reading data into R
+- The data-frame representation of data in R
+- Selecting rows and columns from a data frame
+- Computing numerical summaries
+- Basic plotting
+- Assessing the key assumptions for a t-test
+- Performing a two-sample t-test
+
+## About this tutorial
 
 - The traditional way to enter R commands is via the Terminal, or using the console in RStudio (bottom-left panel when RStudio opens for first time).
 - However, for this course we will use a relatively new feature called R-notebooks.
@@ -37,44 +47,20 @@ print("Hello World")
 
 # Example Analysis
 
-> Ozone is an important pollutant that causes respiratory discomfort, 
-triggers asthma attacks, and may increase the risk of developing asthma.  
-It is produced from various components of car exhaust by chemical 
-reactions in the air, powered by sunlight.  These chemical reactions 
-proceed faster at higher temperatures.
+We will consider the following dataset as an example. 
 
-> Predictions of ozone concentrations from forecast weather conditions are 
-useful for public health purposes (ozone alerts).  Statistical models of 
-ozone levels may also be useful for validating physical/chemical models.
-
-> The data set contains measurements from the summer of 1973 in New York 
-City
-
-- Ozone:  mean concentration of Ozone (ppb) at Roosevelt Island for the 
-	period 1pm to 3pm each day
-
-- Solar:	Solar radiation (Langleys) in the range 4000-7700 Angstrom 
-        (roughly the visible range) from 8am to noon at Central Park
-
-- Wind:	Average wind speed in miles per hour at 7am and 10am, at La 
-	Guardia airport
-
-- Temp:	Maximum daily temperature (Fahrenheit) at La Guardia airport
-
-- Month:	Month
-
-- Day:	Day of Month
+> Darwin (1876) studied the growth of pairs of zea may (aka corn) seedlings, one produced by cross-fertilization and the other produced by self-fertilization, but otherwise grown under identical conditions. His goal was to demonstrate the greater vigour of the cross-fertilized plants. The data recorded are the final height (inches, to the nearest 1/8th) of the plants in each pair.
 
 ## Reading and inspecting the data
 
 
-Like other software (Word, Excel, Photoshop….), R has a default location where it will save files to and import data from. This is known as the working directory in R. You can query what R currently considers its working directory by doing:-
+Like other software (Word, Excel, Photoshop….), R has a default location where it will save files to and import data from. This is known as the working directory in R. You can query what R currently considers its working directory by executing the following R command:-
 
 ```{r}
 getwd()
 ```
 
-*N.B.*Here, a set of open and closed brackets () is used to call the getwd function with no arguments.
+*N.B.*Here, a set of open and closed brackets () is used to run the `getwd` function with no arguments.
 
 We can also list the files in this directory with:-
 
@@ -82,16 +68,17 @@ We can also list the files in this directory with:-
 list.files()
 ```
 
-Any `.csv` file in the working directory can be imported into R by supplying the name of the file to the read.csv function and creating a new variable to store the result. A useful sanity check is the file.exists function which will print TRUE is the file can be found in the working directory.
+A useful sanity check is the file.exists function which will print TRUE is the file can be found in the working directory.
 
 ```{r}
-file.exists("ozone.csv")
+file.exists("zeamays.csv")
 ```
 
-If the file we want to read is not in the current working directory, we will have to write the path to the file; either relative to the current working directory (e.g. the directory “up” from the current working directory, or in a sub-folder), or the full path. In an interactive session, you can do use file.choose to open a dialogue box. The path to the the file will then be displayed in R.
+If the file we want to read is not in the current working directory, we will have to write the *path* to the file; either relative to the current working directory (e.g. the directory “up” from the current working directory, or in a sub-folder), or the full path. In an interactive session, you can run `file.choose` to open a dialogue box. The path to the the file will then be displayed in R.
 
 ```{r eval=FALSE}
 myfile <- file.choose()
+myfile
 ```
 
 * N.B. The latest version of RStudio (> 1.0.44) provides the option to import data from the File menu. Try File -> Import Dataset -> From Csv.* 
@@ -103,14 +90,24 @@ myfile <- file.choose()
     + for functions requiring more than one argument (input), arguments are separated by commas
     + a function may have default values for some arguments; meaning they do not need to be specified
 - The characters `<-` are used to tell R to create a variable
-    + without this the data are not loaded into memory and you won't be able to work with them
+    + without this, the data are not loaded into memory and you won't be able to work with them
 - If you get an error saying `Error in file(file, “rt”) : cannot open the connection...`, you might need to change your working directory or make sure the file name is typed correctly (R is case-sensitive)
 - Typing the name of an object will cause R to print the contents to the screen
 
 ```{r}
-ozone <- read.csv("ozone.csv")
-ozone
+zeamays <- read.csv("zeamays.csv")
+zeamays
 ```
+
+** You should always inspect the object after you have created it**. Sometimes R code will run without error, but the result may not be what you were intending
+
+```{r}
+tmp <- read.delim("zeamays.csv")
+tmp
+```
+
+
+`ozone` is an example of a data frame. The data frame object in R allows us to work with “tabular” data, like we might be used to dealing with in Excel, where our data can be thought of having rows and columns. The values in each column have to all be of the same type (i.e. all numbers or all text).
 
 ## A note on importing your own data
 
@@ -122,29 +119,77 @@ These references will guide you through some of the pitfalls and common mistakes
 - [Data Organisation tutorial by Karl Broman](http://kbroman.org/dataorg/)
 - [The Quartz guide to bad data](https://github.com/Quartz/bad-data-guide/blob/master/README.md)
 
-
-## Basic numerical summaries
-
+## Numerical summaries
 
 ```{r}
-summary(ozone)
+summary(zeamays)
 ```
 
-The data frame object in R allows us to work with “tabular” data, like we might be used to dealing with in Excel, where our data can be thought of having rows and columns. The values in each column have to all be of the same type (i.e. all numbers or all text).
 
+As we saw, typing the name of an object prints all rows and columns to the screen; sometimes not what we sant to see. 
+
+- particular columns can be displayed by putting a `$` sign after the object followed by the name of the column
+    + this shows us a different view of the data, and not changing the underlying data
+    
+```{r}
+zeamays$cross
+zeamays$self
+```
+
+- a more-general approach is to put the row and column indices inside square brackets `[]` separated by a comma
+    + row indices first, then column indices
+
+```{r}
+zeamays[1:5,]
+```
 
 ## Visualisation 
 
+
+
 ```{r}
-hist(ozone$Ozone)
+par(mfrow=c(1,2))
+hist(zeamays$cross)
+hist(zeamays$self)
 ```
 
 
 ```{r}
-boxplot(ozone$Ozone ~ ozone$Month)
+boxplot(zeamays, ylab="Height (in)", xlab="Fertilization")
+
 ```
 
+## Statistical Testing
+
+Based on the visualisation of the data it seems that a non-parametric test would be the safest option
+
 ```{r}
-plot(ozone$Temp, ozone$Ozone)
+wilcox.test(zeamays$cross,zeamays$self)
+```
+
+
+******
+******
+******
+
+### Exercise
+
+- Use a paired t-test
+    + which arguments would you need to change
+
+```{r}
+t.test(zeamays$cross,zeamays$self,paired=TRUE)
+
+```
+
+- calculate a new variable to represent the difference between cross and self plants
+- perform a one-sample t-test on these data
+- compare the results to the paired t-test above
+    + what do you notice?
+    
+```{r}
+diff <- zeamays$cross - zeamays$self
+t.test(diff)
+
 ```
 
