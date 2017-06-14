@@ -1,0 +1,150 @@
+---
+title: "Recap of Statistical Analysis in R"
+author: Dominique-Laurent Couturier, Mark Dunning, Rob Nicholls
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+
+# Introduction
+
+
+
+- The traditional way to enter R commands is via the Terminal, or using the console in RStudio (bottom-left panel when RStudio opens for first time).
+- However, for this course we will use a relatively new feature called R-notebooks.
+- An R-notebook mixes plain text with R code
+    + The R code can be run from inside the document and the results are displayed directly underneath
+- Each chunk of R code looks something like this.
+
+```{r}
+
+```
+
+- Each line of R can be executed by clicking on the line and pressing CTRL and ENTER
+- Or you can press the green triangle on the right-hand side to run everything in the chunk
+    + Try this now!
+
+```{r}
+print("Hello World")
+```
+
+- You can add R chunks by pressing CRTL + ALT + I
+    + or using the Insert menu option
+    + (can also include code from other languages such as Python or bash)
+
+
+# Example Analysis
+
+> Ozone is an important pollutant that causes respiratory discomfort, 
+triggers asthma attacks, and may increase the risk of developing asthma.  
+It is produced from various components of car exhaust by chemical 
+reactions in the air, powered by sunlight.  These chemical reactions 
+proceed faster at higher temperatures.
+
+> Predictions of ozone concentrations from forecast weather conditions are 
+useful for public health purposes (ozone alerts).  Statistical models of 
+ozone levels may also be useful for validating physical/chemical models.
+
+> The data set contains measurements from the summer of 1973 in New York 
+City
+
+- Ozone:  mean concentration of Ozone (ppb) at Roosevelt Island for the 
+	period 1pm to 3pm each day
+
+- Solar:	Solar radiation (Langleys) in the range 4000-7700 Angstrom 
+        (roughly the visible range) from 8am to noon at Central Park
+
+- Wind:	Average wind speed in miles per hour at 7am and 10am, at La 
+	Guardia airport
+
+- Temp:	Maximum daily temperature (Fahrenheit) at La Guardia airport
+
+- Month:	Month
+
+- Day:	Day of Month
+
+## Reading and inspecting the data
+
+
+Like other software (Word, Excel, Photoshop….), R has a default location where it will save files to and import data from. This is known as the working directory in R. You can query what R currently considers its working directory by doing:-
+
+```{r}
+getwd()
+```
+
+*N.B.*Here, a set of open and closed brackets () is used to call the getwd function with no arguments.
+
+We can also list the files in this directory with:-
+
+```{r}
+list.files()
+```
+
+Any `.csv` file in the working directory can be imported into R by supplying the name of the file to the read.csv function and creating a new variable to store the result. A useful sanity check is the file.exists function which will print TRUE is the file can be found in the working directory.
+
+```{r}
+file.exists("ozone.csv")
+```
+
+If the file we want to read is not in the current working directory, we will have to write the path to the file; either relative to the current working directory (e.g. the directory “up” from the current working directory, or in a sub-folder), or the full path. In an interactive session, you can do use file.choose to open a dialogue box. The path to the the file will then be displayed in R.
+
+```{r eval=FALSE}
+myfile <- file.choose()
+```
+
+* N.B. The latest version of RStudio (> 1.0.44) provides the option to import data from the File menu. Try File -> Import Dataset -> From Csv.* 
+
+
+- Assuming the file can be found, we can use the `read.csv` function to import the data. Other functions can be used to read tab-delimited files (read.delim) or a generic read.table function. A data frame object is created.
+- The file name `ozone.csv` is the only *argument* to the function `read.csv`
+    + arguments are listed inside the brackets
+    + for functions requiring more than one argument (input), arguments are separated by commas
+    + a function may have default values for some arguments; meaning they do not need to be specified
+- The characters `<-` are used to tell R to create a variable
+    + without this the data are not loaded into memory and you won't be able to work with them
+- If you get an error saying `Error in file(file, “rt”) : cannot open the connection...`, you might need to change your working directory or make sure the file name is typed correctly (R is case-sensitive)
+- Typing the name of an object will cause R to print the contents to the screen
+
+```{r}
+ozone <- read.csv("ozone.csv")
+ozone
+```
+
+## A note on importing your own data
+
+If you are trying to read your own data, and encounter an error at this stage, you may need to consider if your data are in the correct form for analysis. Like most programming languages, R will struggle if your spreadsheet has been heavily formatted to include colours, formulas and special formatting.
+
+These references will guide you through some of the pitfalls and common mistakes to avoid when formatting data
+
+- [Formatting data tables in Spreadsheets](http://www.datacarpentry.org/spreadsheet-ecology-lesson/01-format-data.html)
+- [Data Organisation tutorial by Karl Broman](http://kbroman.org/dataorg/)
+- [The Quartz guide to bad data](https://github.com/Quartz/bad-data-guide/blob/master/README.md)
+
+
+## Basic numerical summaries
+
+
+```{r}
+summary(ozone)
+```
+
+The data frame object in R allows us to work with “tabular” data, like we might be used to dealing with in Excel, where our data can be thought of having rows and columns. The values in each column have to all be of the same type (i.e. all numbers or all text).
+
+
+## Visualisation 
+
+```{r}
+hist(ozone$Ozone)
+```
+
+
+```{r}
+boxplot(ozone$Ozone ~ ozone$Month)
+```
+
+```{r}
+plot(ozone$Temp, ozone$Ozone)
+```
+
