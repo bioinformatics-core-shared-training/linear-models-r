@@ -153,21 +153,133 @@ zeamays[1:5,]
 
 ## Visualisation 
 
+All your favourite types of plot can be created in R
 
+![](images/examplePlots.png)
+
+- Simple plots are supported in the *base* distribution of R (what you get automatically when you download R). 
+    + `boxplot`, `hist`, `barplot`,... all of which are extensions of the basic `plot` function
+- Many different customisations are possible
+    + colour, overlay points / text, legends, multi-panel figures
+- ***You need to think about how best to visualise your data*** 
+    + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
+- R cannot prevent you from creating a plotting disaster: 
+    + http://www.businessinsider.com/the-27-worst-charts-of-all-time-2013-6?op=1&IR=T
+
+    
+Plots can be constructed from vectors of numeric data, such as the data we get from a particular column in a data frame.
 
 ```{r}
-par(mfrow=c(1,2))
 hist(zeamays$cross)
-hist(zeamays$self)
 ```
 
 
 ```{r}
-boxplot(zeamays, ylab="Height (in)", xlab="Fertilization")
+boxplot(zeamays)
 
 ```
+
+```{r}
+plot(zeamays$cross,zeamays$self)
+```
+
+
+*Lots* of customisations are possible to enhance the appaerance of our plots. Not for the faint-hearted, the help pages `?plot` and `?par` give the full details. In short,
+
+- Axis labels, and titles can be specified as character strings. 
+
+- R recognises many preset names as colours. To get a full list use `colours()`, or check this [online reference](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf).
+    + can also use `*R*ed, *G*reen, *B*lue values; which you might get from a paint program
+- Plotting characters can be specified using a pre-defined number:-
+
+![](images/plot-char.png)
+
+```{r}
+boxplot(zeamays, 
+        ylab="Height (in)", 
+        xlab="Fertilization",
+        col=c("yellow","blue"))
+```
+
+```{r}
+plot(zeamays$cross, zeamays$self,
+     pch=16,
+     col="steelblue",
+     xlim=c(10,25),
+     ylim=c(10,25),
+     xlab="Cross-Fertilised",
+     ylab="Self-Fertilised")
+abline(0,1,lty=2)
+legend("topleft",lty=2,legend="y=x")
+```
+
 
 ## Statistical Testing
+
+In the Design of Experiments, Fisher (1935) used these data to illustrate a paired t-test 
+
+
+
+## Conducting a t-test by-hand
+
+$t_{n-1} = t_{19} = \frac{\bar{X_{A-B}}}{s.e.(\bar{X_{A-B}})} =$
+
+
+```{r}
+
+diff <- zeamays$cross - zeamays$self
+mu <- mean(diff)
+n <- nrow(zeamays)
+df <- n-1
+se <- sd(diff)/sqrt(n)
+
+
+stat <- mu / se
+stat
+```
+
+Given this test statistic, we need to compute the probability of observing such a statistic by chance. Such a probability is given by calculating the area under the curve defined by a particular distribution of t-statistics
+
+```{r echo=FALSE}
+xs <- seq(-5,5,length.out = 10000)
+ys <- dt(x = xs,df = df)
+plot(xs,ys,main=paste("t distribution with ",df,"degrees of freedom"))
+abline(v=stat,lty=2,col="red")
+rect(xleft = stat,xright = 6,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5))
+```
+
+
+Traditionally, this would have been done by looking-up standard reference tables. Fortunately, R comes with the capability of findiing the probability of observing less than a particular value (quantile) from a given distribution 
+
+- in this case we have a `t` distribution with `r df` degrees of freedom and a quantile of `r stat`
+- the funcion to use is `pt`
+    + to calculate probabilities from a normal or binomial distributions or other distributions, we could use `pnorm`, `pbinom` etc
+
+```{r}
+pt(q=2.148,df=df)
+```
+
+The shaded area is given by subtracting the previous result from 1 (as the total area under the curve is 1)
+
+```{r}
+1- pt(q=2.148,df=df)
+```
+
+```{r echo=FALSE}
+xs <- seq(-5,5,length.out = 10000)
+ys <- dt(x = xs,df = df)
+plot(xs,ys,main=paste("t distribution with ",df,"degrees of freedom"))
+abline(v=stat,lty=2,col="red")
+rect(xleft = stat,xright = 6,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5))
+rect(xleft = -6,xright = -stat,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5))
+```
+
+
+```{r}
+2*(1- pt(q=2.148,df=df))
+```
+
+## Using the `t.test` function
 
 The function `t.test` in R can be used to perform statistical testing in many different scenarios
 
@@ -175,17 +287,15 @@ The function `t.test` in R can be used to perform statistical testing in many di
 - one-sample versus two-sample
 - two-tailed versus one-tailed
 
+To repeat the test we performed by-hand, we need to set the relevant arguments in t.test
 
+- see the help page for the function
+    + `?t.test`
+    
 ```{r}
-t.test(zeamays$cross,zeamays$self)
+t.test(x=diff)
 
 ```
-
-- a two-tailed test is performed
-    + we are looking for a difference between the two groups, but don't care which group has a larger mean
-- the test statistic is `2.4371`
-- the p-value is 0.02328
-- the means of each group are 20.19167 and 17.575 respectively
 
 ******
 ******
@@ -193,11 +303,9 @@ t.test(zeamays$cross,zeamays$self)
 
 ### Exercise
 
-- would an assumption of equal variances be justified?
-    + check the boxplot from above
-    + HINT the `sd` function is used to calculate standard deviation
-- re-run the test with the hypothesis that cross fertilised breed is taller
-    + which argument to t-test would you need to change
+- Run the analysis as a paired two-sample t test
+    + HINT: You will need to specify to vectors 
+- The default when given two vectors is to run an independent test. You will need to discover which argument to change to tell R to run a paired test
 
 ```{r}
 
@@ -209,42 +317,15 @@ t.test(zeamays$cross,zeamays$self)
 ******
 ******
 
-
-In the Design of Experiments, Fisher (1935) used these data to illustrate a paired t-test 
-
-
-- this can be performed by changing the argument `paired` to be `TRUE`
-
-```{r}
-t.test(zeamays$cross,zeamays$self,paired=TRUE)
-
-```
 
 Later in the book (section 21), Fisher also used the data to illustrate an early example of a non-parametric permutation test, treating each paired difference as having (randomly) either a positive or negative sign.
 
 ```{r}
-wilcox.test(zeamays$cross,zeamays$self)
+wilcox.test(x=zeamays$cross,
+            y=zeamays$self,
+            paired=TRUE)
 ```
 
 
-******
-******
-******
-
-### Exercise
 
 
-- calculate a new variable to represent the difference between cross and self plants
-- perform a one-sample t-test on these data
-- compare the results to the paired t-test above
-    + what do you notice?
-    
-```{r}
-diff <- zeamays$cross - zeamays$self
-t.test(diff)
-
-```
-
-******
-******
-******
