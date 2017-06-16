@@ -10,7 +10,7 @@ output:
 
 # Introduction
 
-The purpose
+The purpose of this section is to review some of the key concepts in basic R usage, and statistical testing
 
 - Reading data into R
 - The data-frame representation of data in R
@@ -169,15 +169,21 @@ All your favourite types of plot can be created in R
     
 Plots can be constructed from vectors of numeric data, such as the data we get from a particular column in a data frame.
 
+- a histogram is commonly-used to examine the distribution of a particular variable
+
 ```{r}
 hist(zeamays$cross)
 ```
 
+- a boxplot is often used to compare distributions visually
+    + if given a data-frame, each column will be shown as a separate box
 
 ```{r}
 boxplot(zeamays)
 
 ```
+
+- scatter plots can be constructed by given two vectors as arguments to `plot`
 
 ```{r}
 plot(zeamays$cross,zeamays$self)
@@ -200,6 +206,15 @@ boxplot(zeamays,
         xlab="Fertilization",
         col=c("yellow","blue"))
 ```
+
+In the following plot we
+
+- change the plotting character to filled circles
+- change the colour to `steelblue`
+- change the axis labels
+- modify the x and y axis limits
+- add the line of equality `y=x`
+- add a legend
 
 ```{r}
 plot(zeamays$cross, zeamays$self,
@@ -251,7 +266,7 @@ rect(xleft = stat,xright = 6,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5)
 
 Traditionally, this would have been done by looking-up standard reference tables. Fortunately, R comes with the capability of findiing the probability of observing less than a particular value (quantile) from a given distribution 
 
-- in this case we have a `t` distribution with `r df` degrees of freedom and a quantile of `r stat`
+- in this case we have a `t` distribution with 14 degrees of freedom and a quantile of 2.148
 - the funcion to use is `pt`
     + to calculate probabilities from a normal or binomial distributions or other distributions, we could use `pnorm`, `pbinom` etc
 
@@ -308,6 +323,7 @@ t.test(x=diff)
 - The default when given two vectors is to run an independent test. You will need to discover which argument to change to tell R to run a paired test
 
 ```{r}
+### Write your code here
 
 
 ```
@@ -318,7 +334,10 @@ t.test(x=diff)
 ******
 
 
-Later in the book (section 21), Fisher also used the data to illustrate an early example of a non-parametric permutation test, treating each paired difference as having (randomly) either a positive or negative sign.
+Later in his book (section 21), Fisher also used the data to illustrate an early example of a non-parametric permutation test, treating each paired difference as having (randomly) either a positive or negative sign.
+
+- non-parametric equivalents of two-sample tests are performed using the `wilcox.test` function
+- fortunately, the arguments are similar to `t.test`
 
 ```{r}
 wilcox.test(x=zeamays$cross,
