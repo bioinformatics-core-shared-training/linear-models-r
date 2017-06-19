@@ -155,7 +155,6 @@ zeamays[1:5,]
 
 All your favourite types of plot can be created in R
 
-![](images/examplePlots.png)
 
 - Simple plots are supported in the *base* distribution of R (what you get automatically when you download R). 
     + `boxplot`, `hist`, `barplot`,... all of which are extensions of the basic `plot` function
@@ -196,9 +195,7 @@ plot(zeamays$cross,zeamays$self)
 
 - R recognises many preset names as colours. To get a full list use `colours()`, or check this [online reference](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf).
     + can also use `*R*ed, *G*reen, *B*lue values; which you might get from a paint program
-- Plotting characters can be specified using a pre-defined number:-
-
-![](images/plot-char.png)
+- Plotting characters can be specified using a pre-defined number
 
 ```{r}
 boxplot(zeamays, 
@@ -233,11 +230,9 @@ legend("topleft",lty=2,legend="y=x")
 
 In the Design of Experiments, Fisher (1935) used these data to illustrate a paired t-test 
 
-
-
 ## Conducting a t-test by-hand
 
-$t_{n-1} = t_{19} = \frac{\bar{X_{A-B}}}{s.e.(\bar{X_{A-B}})} =$
+$t_{n-1} = \frac{\bar{X_{A-B}}}{s.e.(\bar{X_{A-B}})} =$
 
 
 ```{r}
@@ -253,9 +248,12 @@ stat <- mu / se
 stat
 ```
 
-Given this test statistic, we need to compute the probability of observing such a statistic by chance. Such a probability is given by calculating the area under the curve defined by a particular distribution of t-statistics
+Given this test statistic, we need to compute the probability of observing such a statistic by chance. Such a probability is given by calculating the area under the curve defined by a particular distribution of t-statistic (with a given degrees of freedom)
 
 ```{r echo=FALSE}
+## This is the code to produce the t-distribution curve, but not part of the practical itself
+## Feel free to ignore ;)
+
 xs <- seq(-5,5,length.out = 10000)
 ys <- dt(x = xs,df = df)
 plot(xs,ys,main=paste("t distribution with ",df,"degrees of freedom"))
@@ -281,6 +279,9 @@ The shaded area is given by subtracting the previous result from 1 (as the total
 ```
 
 ```{r echo=FALSE}
+## This is the code to produce the t-distribution curve, but not part of the practical itself
+## Feel free to ignore ;)
+
 xs <- seq(-5,5,length.out = 10000)
 ys <- dt(x = xs,df = df)
 plot(xs,ys,main=paste("t distribution with ",df,"degrees of freedom"))
@@ -289,6 +290,7 @@ rect(xleft = stat,xright = 6,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5)
 rect(xleft = -6,xright = -stat,ybottom = -1,ytop = 0.5,col= rgb(0,0,1.0,alpha=0.5))
 ```
 
+If we wanted a two-sided probability we would do;
 
 ```{r}
 2*(1- pt(q=2.148,df=df))
