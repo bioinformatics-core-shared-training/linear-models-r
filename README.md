@@ -1,26 +1,23 @@
-# Further Statistical Analysis in R
+# Introduction to Linear Modelling with R
 
 ## Description
 
-The course will cover linear regression, ANOVA and non-parametric ANOVA. It will be a mixture of lectures and hands-on time using RStudio to analyse data.  By the end of this course you should be able to:
+The course will cover ANOVA, linear regression and some extensions. It will be a mixture of lectures and hands-on time using RStudio to analyse data.
 
 
 # Aims: During this course you will learn about: 
 
 - ANOVA
-- Assessing correlation between two variables
 - Simple and multiple regression
-- Generalised Linear Models
+- Generalised Linear Models 
+- Introduction to more advanced topics, like non-linear models and time series.
 
 # Objectives: After this course you should be able to
 
-- Select an appropriate test for analysing data
-- Analyse data using linear regression
-- Check the assumptions of linear regression are met by the data
-- Check the fit of the linear regression model to your data
+- Realise the connection between t-tests, ANOVA and linear regression 
+- Fit a linear regression
+- Check if the assumptions of linear regression are met by the data and what to do if they are not
 - Know when linear regression is not appropriate and have an idea of which alternative method might be appropriate
-- Know how to check that the ANOVA assumptions are met by the data
-- Analyse data using non-parametric ANOVA
 - Know when you need to seek help with analysis as the data structure is too complex for the methods taught
 
 # Pre-requisites
