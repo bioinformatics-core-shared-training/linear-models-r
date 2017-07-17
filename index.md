@@ -30,21 +30,25 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Tutorial [HTML](r-recap.nb.html)
   + Tutorial [R markdown](r-recap.Rmd)
 - ANOVA
-  + Slides [PDF]()
-  + Tutorial [HTML]()
-  + Tutorial [R markdown]()
-- Linear Models
-  + Slides [PDF]()
-  + Tutorial [HTML]()
-  + Tutorial [R markdown]()
+  + Slides [PDF](ANOVA.pdf)
+  + Tutorial [HTML](ANOVA.html)
+  + Tutorial [R markdown](ANOVA.Rmd)
+- Simple Regression
+  + Slides [PDF](simple_regression.pdf)
+  + Tutorial [HTML](simple_regression.html)
+  + Tutorial [R markdown](simple_regression.Rmd)
+- Multiple Regression
+  + Slides [PDF](multiple_regression.pdf)
+  + Tutorial [HTML](multiple_regression.html)
+  + Tutorial [R markdown](multiple_regression.Rmd)
 - Generalised Linear Models
-  + Slides [PDF]()
+  + Slides [PDF]
   + Tutorial [HTML]()
   + Tutorial [R markdown]()
-- Time Series
-  + Slides [PDF]()
-  + Tutorial [HTML]()
-  + Tutorial [R markdown]()
+- Time Series and Non-Linear Models
+  + Slides [PDF](time_series_and_nonlinear_models.pdf)
+  + Tutorial [HTML](time_series_and_nonlinear_models.html)
+  + Tutorial [R markdown](time_series_and_nonlinear_models.Rmd)
   
   
 
