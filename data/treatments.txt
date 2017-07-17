@@ -1,0 +1,6 @@
+	Control	Treatment 1	Treatment 2	Treatment 3
+GS	54.	43.	78.	111.
+JM	23.	34.	65.	99.
+HM	45.	65.	99.	78.
+DR	54.	77.	79.	90.
+PS	45.	46.	87.	95.

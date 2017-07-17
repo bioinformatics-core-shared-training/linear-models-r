@@ -1,0 +1,11 @@
+	micrograms	Optical Density
+	1.0	0.040
+	2.0	0.059
+	3.0	0.083
+	4.0	0.102
+	5.0	0.123
+	6.0	0.139
+	7.0	0.160
+Unknown 1		0.067
+Unknown 2		0.073
+Unknown 3		0.098
