@@ -27,7 +27,7 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 # Materials
 
 - Course Introduction
-  + Tutorial [HTML](r-recap.nb.hmtl)
+  + Tutorial [HTML](r-recap.nb.html)
   + Tutorial [R markdown](r-recap.Rmd)
 - ANOVA
   + Slides [PDF]()
