@@ -185,6 +185,7 @@ hist(diet$weight.loss)
 
 - a boxplot is often used to compare distributions visually
     + if given a data-frame, each column will be shown as a separate box
+    + otherwise the formula syntax `~` is used to define x and y variables
 
 ```{r}
 boxplot(diet$weight.loss~diet$diet.type)
