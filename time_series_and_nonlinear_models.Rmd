@@ -21,7 +21,7 @@ output:
 
 <!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
 
-```{r message = FALSE, warning = FALSE, echo = FALSE} 
+```{r message = FALSE, warning = FALSE, echo = FALSE,eval=FALSE} 
 # change working directory: should be the directory containg the Markdown files:
 setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
 
@@ -54,7 +54,7 @@ Are all terms significant? Is this model appropriate? What else could be tried t
 We will now consider a dataset corresponding to the Monthly Southern Oscillation Index, measured as the difference in sea-surface air pressure between Darwin and Tahiti.
 
 ```{r}
-x=read.table("OscillationIndex.txt",header=TRUE)
+x=read.table("data/OscillationIndex.txt",header=TRUE)
 x$Index
 plot(x$Index,type="l",ylab="Oscillation Index")
 ```
