@@ -46,7 +46,7 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Tutorial [HTML](glm.html)
   + Tutorial [R markdown](glm.Rmd)
 - Time Series and Non-Linear Models
-  + Slides [PDF](time_series_and_nonlinear_models.pdf)
+  + Slides [PDF](nonlinear_and_time_series.pdf)
   + Tutorial [HTML](time_series_and_nonlinear_models.html)
   + Tutorial [R markdown](time_series_and_nonlinear_models.Rmd)
   
