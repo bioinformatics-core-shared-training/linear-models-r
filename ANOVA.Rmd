@@ -31,7 +31,7 @@ setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
 
 A full version of the dataset *diet* may be found online on the U. of Sheffield website <https://www.sheffield.ac.uk/polopoly_fs/1.570199!/file/stcp-Rdataset-Diet.csv>. 
 
-A slightly modified version is available in the data. csv file  stored under data/diet.csv, The data set contains information on 76 people who undertook one of three diets (referred to as diet _A_, _B_ and _C_). There is background information such as age, gender, and height. The aim of the study was to see which diet was best for losing weight.
+A slightly modified version is available in the data file is stored under data/diet.csv. The data set contains information on 76 people who undertook one of three diets (referred to as diet _A_, _B_ and _C_). There is background information such as age, gender, and height. The aim of the study was to see which diet was best for losing weight.
 
 
 # Section 1: importation and descriptive analysis
