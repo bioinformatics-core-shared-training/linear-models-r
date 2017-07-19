@@ -58,10 +58,7 @@ Here is some *italic* text, but we can also write in **bold**, or write things
 
 We will use a dataset from The University of Sheffield Mathematics and Statistics Help group ((MASH)(https://www.sheffield.ac.uk/mash/statistics2/anova)).
 
-> The data set `Diet.csv` contains information on 78 people who undertook one of three
-diets. There is background information such as age, gender (Female=0, Male=1) and
-height. The aim of the study was to see which diet was best for losing weight so the
-independent variable (group) is diet.
+> The data set Diet.csv contains information on 78 people who undertook one of three diets. There is background information such as age, gender (Female=0, Male=1) and height. The aim of the study was to see which diet was best for losing weight so the independent variable (group) is diet.
 
 
 ## Reading and inspecting the data
@@ -143,12 +140,16 @@ diet$weight.loss <- diet$final.weight - diet$initial.weight
 
 ```
 
+Subsetting rows and columns is done using the `[rows, columns]` syntax; where `rows` and `columns` are *vectors* containing the rows and columns you want
+
+- you can choose to omit either vector to show all rows and columns. *However, you still need to remember the `,`
 
 ```{r}
 diet[1:5,]
 diet[,2:3]
 ```
 
+Logical tests can be used to select rows. e.g. using `==`, `<`, `>`
 
 ```{r}
 diet$diet.type == "A"
