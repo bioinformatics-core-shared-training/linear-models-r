@@ -1,0 +1,98 @@
+
+
+
+---
+title: "Time Series Analysis and Non-Linear Models with R" 
+author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_document:
+    theme: united 
+    highlight: tango
+    code_folding: show    
+    toc: true           
+    toc_depth: 2       
+    toc_float: true     
+    fig_width: 8
+    fig_height: 6
+---
+
+
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
+
+```{r message = FALSE, warning = FALSE, echo = FALSE} 
+# change working directory: should be the directory containg the Markdown files:
+setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+
+```
+
+# Section 1: Non-Linear Models
+
+The in-built dataset "trees" contains data pertaining to the Volume, Girth and Height of 31 felled black cherry trees. In the Simple Regression session, we constructed a simple linear model for Volume using Girth as the independent variable. In the Multiple Regression session we trialled various models, including some that had multiple predictor variables and/or involved log-log transformations to explore power relationships.
+
+However, due to limitations of the method, we were not able to explore other options such as a parameterised power relationship with an additive error model. We will now attempt to fit this model:
+
+$y = \beta_0x_1^{\beta_1}x_2^{\beta_2}+\varepsilon$
+
+Parameters for non-linear models may be estimated using the "nls" package in R.
+
+```{r}
+volume = trees$Volume
+height = trees$Height
+girth = trees$Girth
+m1 = nls(volume~beta0*girth^beta1*height^beta2,start=list(beta0=1,beta1=2,beta2=1))
+summary(m1)
+```
+Note that the parameters `beta0`, `beta1` and `beta2` weren't defined prior to the function call - nls knew what to do with them. Also note that we had to provide starting points for the parameters. What happens if you change them?
+
+Are all terms significant? Is this model appropriate? What else could be tried to achieve a better model?
+
+
+# Section 2: Time Series Analysis
+
+We will now consider a dataset corresponding to the Monthly Southern Oscillation Index, measured as the difference in sea-surface air pressure between Darwin and Tahiti.
+
+```{r}
+x=read.table("OscillationIndex.txt",header=TRUE)
+x$Index
+plot(x$Index,type="l",ylab="Oscillation Index")
+```
+
+Now let's look at the autocorrelation function corresponding to this dataset:
+```{r}
+acf(x$Index,lag.max=70,main="")
+```
+
+There is clear long-range oscillatory behaviour in the autocorrelation function, indicating that the process is not stationary.
+
+We should consider an integrated (ARIMA) model, so let's calculate and plot the first differences, as well as the associated autocorrelation function:
+```{r}
+plot(diff(x$Index),type="l",ylab="Oscillation Index (d=1)")
+acf(diff(x$Index),lag.max=70,main="")
+```
+
+That's more promising - there is one large negative peak at lag=1, after which the autocorrelation function decays rapidly and stays small. This indicates that this process is covariance stationary. This also indicates that the Moving Average (MA) part of the model may be of order 1. So an ARIMA(0,1,1) model might be a possibility.
+
+Now let's look at the partial autocorrelation function:
+```{r}
+pacf(diff(x$Index),lag.max=70,main="")
+```
+
+This also looks promising. There are four negative peaks before the PACF decays below the significance threshold. That indicates that the AutoRegressive (AR) part of the model may have order up to 4.
+
+Now we'll try to create an ARIMA(0,1,1) model:
+```{r}
+arima(x$Index,order=c(0,1,1))
+```
+
+Note that the standard error of the coefficient indicates significance of the term. 
+
+Now try creating other ARIMA models, and compare.
+
+There are a variety of time series datasets in the in-built R "datasets" package. Type `data()` to get a full list. For example, the datasets called "nhtemp", "lynx", "Nile", "co2" and "WWWusage" contain time series data. Explore such datasets - look at autocorrelation and partial autocorrelation functions, identify whether the datasets are suitable for this type of analysis, and try fitting ARIMA models.
+
+
+
+
+
