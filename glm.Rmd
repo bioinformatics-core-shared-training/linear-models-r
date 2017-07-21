@@ -97,7 +97,7 @@ Lets assess is the model fit seems satisfactory by means
 par(mfrow=c(2,2),mar=c(3,5,3,0))
 plot(fit.glm)
 # randomised normalised quantile residuals
-plot(fit.gamlss)
+plot(gamlss(bron~cigs,data=Bronchitis,family=BI))
 ```
 
 
@@ -180,8 +180,7 @@ plot(fit.gamlss)
 Analyse further the Bronchitis data of Jones (1975) by 
 
 * first investigating if the probability of having bronchitis also depends on _pollution_ (variable `poll`),
-* first investigating if there is an interactio between the variables `cigs` and `poll`.
-
+* second investigating if there is an interaction between the variables `cigs` and `poll`.
 
 
 ### (ii) *myocardialinfarction.csv*
@@ -204,9 +203,5 @@ This data set is derived from Agresti (2007, Table 3.2, pp.76-77). It gives 6 va
 
 Check if the width of female's back can explain the number of satellites attached by fitting a Poisson regression model with width.
 
-
-
-
-
-        
+      
         

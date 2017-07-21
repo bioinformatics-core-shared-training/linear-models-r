@@ -80,8 +80,8 @@ t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
 
 Lets first
 
-* define the Fisher's and Welch's residuals by substracting the mean of each group to the weight loss of the corresponding participants 
-* define the Kruskal's residual's by substraction the median of each group to the weight loss of the corresponding participants 
+* define the Fisher's and Welch's residuals by subtracting the mean of each group to the weight loss of the corresponding participants 
+* define the Kruskal's residual's by subtraction the median of each group to the weight loss of the corresponding participants 
 
 The mean or median of each group may be obtained by means of the function `tapply()` which allows a apply a function (like `mean` or `median`) to   and by  
 
@@ -135,7 +135,7 @@ Lets
 * compare the Tukey HSD confidence interval size for the difference of means between the weight losses of *Diet A* and *Diet B* with the one obtained by means of a Student's t-test (function `t.test()` with argument `var.equal` set to `TRUE`)
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE} 
-TukeyHSD(diet.fisher)
+plot(TukeyHSD(diet.fisher))
 t.test(weight.loss~diet.type,data=diet[diet$diet.type!="C",],var.equal = TRUE)
 ```
 
@@ -168,15 +168,11 @@ The treatments are
 
 ## (ii) *globalBreastCancerRisk.csv*
 
-The file *globalBreastCancerRisk.csv* gives the number of new cases of Breast Cancer (per population of 10,000) in various countries around the world, along with various health and lifestyle risk factors. These data were collected from the gapminder resource 1. 
+The file *globalBreastCancerRisk.csv* gives the number of new cases of Breast Cancer (per population of 10,000) in various countries around the world, along with various health and lifestyle risk factors. 
 
 Let’s suppose we are initially interested in whether the number of breast cancer cases is significantly different in different regions of the world.
 
-Visualise the distribution of breast cancer incidence in each continent. Check how many observations belong to each group (continent). Are there any groups that you would consider removing/groupinf before performing the analysis ? 
-
-
-
-
+Visualise the distribution of breast cancer incidence in each continent. Check how many observations belong to each group (continent). Are there any groups that you would consider removing/grouping before performing the analysis ? 
 
 
 
