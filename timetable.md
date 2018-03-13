@@ -7,5 +7,5 @@
 - 14:00 - 15:15 Multiple regression (tbd)
 - 15:15 - 16:30 GLMs (DLC)
 - 16:30 - 17:15 Time series (tbd)
-- 17:15 - 17:30 Conclusion
+- 17:15 - 17:30 Conclusion.  
 Tea & Coffee breaks will be fitted in.
