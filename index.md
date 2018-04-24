@@ -24,6 +24,9 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 
 - Please Download [this zip file](Course_Data.zip) to have all the datasets and R files used in this course
 
+# Feedback
+- After the course, please fill in this [feedback form](https://www.surveymonkey.co.uk/r/PNLFMYS). Thank you.
+
 # Materials
 
 - Course Introduction
