@@ -214,3 +214,4 @@ boxplot(diet$weight.loss~diet$diet.type,
         col=c("yellow","blue","red"),
         main="Weight Loss According to diet type")
 ```
+
