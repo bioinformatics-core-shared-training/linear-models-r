@@ -17,6 +17,7 @@ The purpose of this section is to review some of the key concepts in basic R usa
 - Selecting rows and columns from a data frame
 - Computing numerical summaries
 - Basic plotting
+- Getting help on functions in RStudio
 
 
 ## About this tutorial
@@ -215,3 +216,12 @@ boxplot(diet$weight.loss~diet$diet.type,
         main="Weight Loss According to diet type")
 ```
 
+You can get help on any of the functions that we will be using in this course by using the '?' or 'help()' commands. The help will appear in the help pane (usually bottom RH corner) .
+
+```{r}
+?lm
+```
+
+```{r}
+help(lm)
+```
