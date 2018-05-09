@@ -1,11 +1,10 @@
-# Introduction to Linear Modelling with R
+## Introduction to Linear Modelling with R
 
 ## Description
 
 The course will cover ANOVA, linear regression and some extensions. It will be a mixture of lectures and hands-on time using RStudio to analyse data.
 
 [Timetable](timetable.md)
-
 
 # Aims: During this course you will learn about: 
 
