@@ -1,11 +1,16 @@
 # Introduction to Linear Models with R
+## Course Schedule
 
-- 09:45 - 10:15 Welcome and R-efresher (MF)
-- 10:15 - 11:30 ANOVA (DLC)
-- 11:30 - 13:00 Simple regression model (tbd)
-- 13:00 - 14:00 LUNCH (not provided)
-- 14:00 - 15:15 Multiple regression (tbd)
-- 15:15 - 16:30 GLMs (DLC)
-- 16:30 - 17:15 Time series (tbd)
-- 17:15 - 17:30 Conclusion.  
-Tea & Coffee breaks will be fitted in.
+| Time  | Topic |
+| ------------- | ------------- |
+| 09.45 - 10.15   | Welcome & Introduction to Rstudio and Markdown (Mark)  |
+| 10.15 - 11.30  | Anova (Dominique) {10 min coffee break at 11am*} |
+| 11.30 - 13.00  | Simple Regression (Rob)  |
+| 13.00 - 14.00 | Lunch Break  |
+| 14.00 - 15.15 | Multiple Regression (Rob) |
+| 15.15 -15.30 | { 15 min Tea break* }  |
+| 15.30 - 16.45  | GLMs (Dominique)  |
+| 16.45 - 17.15 | Time-series (Rob) |
+| 17.15 - 17.25  | Conclusion  |
+
+*Coffee, Tea, Water & Cookies provided
