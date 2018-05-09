@@ -16,5 +16,5 @@
 *Coffee, Tea, Water & Cookies provided
 
 ![CRUK Cambridge Institute](logos/CRUK_CI_logo.png)
-![MRC Laboratory of Molecular Biology](logos/LMB_logo.png)
+![MRC Laboratory of Molecular Biology](logos/LMB_logo_small.png)
 
