@@ -1,5 +1,4 @@
-## Introduction to Linear Models with R
-## Course Schedule
+## Introduction to Linear Models with R - Course Schedule
 
 | Time  | Topic |
 | ------------- | ------------- |
