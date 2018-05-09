@@ -27,6 +27,9 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 # Feedback
 - After the course, please fill in this [feedback form](https://www.surveymonkey.co.uk/r/PNLFMYS). Thank you.
 
+# Other courses
+- The CRUK-CI Bioinformatics Core facility run a catalogue of courses. [Please visit for more details](https://www.cruk.cam.ac.uk/core-facilities/bioinformatics-core/training-2018).
+
 # Materials
 
 - Course Introduction
