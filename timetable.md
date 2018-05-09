@@ -1,3 +1,4 @@
+### [http://tinyurl.com/linear-models-r](http://tinyurl.com/linear-models-r)
 ## Introduction to Linear Models with R - Course Schedule
 
 | Time  | Topic |
