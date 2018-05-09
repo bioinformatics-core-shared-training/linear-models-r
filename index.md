@@ -60,7 +60,7 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 
 # Pre-requisites
 
- This course assumes basic knowledge of statistics and use of R, which would be obtained from our Introductory Statistics Course and an "Introduction to R for Solving Biological Problems" run at the Genetics department (or equivalent).
+ **This course assumes basic knowledge of statistics and use of R** , which would be obtained from our Introductory Statistics Course and an "Introduction to R for Solving Biological Problems" run at the Genetics department (or equivalent).
  
  - [Introduction to Solving Biological Problems with R](http://cambiotraining.github.io/r-intro/)
  - [Introduction to Statistical Analysis](http://bioinformatics-core-shared-training.github.io/IntroductionToStats/)
