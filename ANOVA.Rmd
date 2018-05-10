@@ -4,7 +4,7 @@
 ---
 title: "ANOVA with R: 
 analysis of the *diet* dataset" 
-author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:
@@ -24,7 +24,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
