@@ -1,6 +1,6 @@
 ---
 title: "Recap of Statistical Analysis in R"
-author: Dominique-Laurent Couturier, Mark Dunning, Rob Nicholls
+author: Dominique-Laurent Couturier, Mark Dunning, Rob Nicholls, Mark Fernandes
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_notebook:
@@ -71,8 +71,10 @@ Like other software (Word, Excel, Photoshop….), R has a default location where
 getwd()
 ```
 
-*N.B.*Here, a set of open and closed brackets () is used to run the `getwd` function with no arguments.
-
+*N.B.*Here, a set of open and closed brackets () is used to run the `getwd` function with no arguments.   
+*Note if you are following this material on a Windows machine as opposed to a Linux or MacOS machine 
+you will get a path like C:\Users\Fred. If you want to use the complementing R command 'setwd()' to set
+the working directory you MUST escape the \ i.e. setwd("C:\\Users\\Fred").  
 We can also list the files in a specific directory with:-
 
 ```{r}
