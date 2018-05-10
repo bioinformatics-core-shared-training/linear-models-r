@@ -165,7 +165,20 @@ x = order(cars$speed)
 lines(exp(fitted(m5))[x]~cars$speed[x])
 ```
 
-# Section 4: Practical Exercises
+# Section 4: Relationship between t-test, anova and linear regression
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# import
+diet = read.csv("data/diet.csv",row.names=1)
+diet$weight.loss = diet$initial.weight - diet$final.weight 
+# comparison
+t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
+summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+summary(lm(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+```
+
+
+# Section 5: Practical Exercises
 
 ## Old Faithful
 
