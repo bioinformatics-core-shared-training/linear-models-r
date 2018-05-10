@@ -23,7 +23,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
