@@ -3,7 +3,7 @@
 
 ---
 title: "Simple Regression with R" 
-author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+author: "R. Nicholls / D.-L. Couturier / M. Fernandes"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:

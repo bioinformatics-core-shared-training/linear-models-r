@@ -1,0 +1,74 @@
+
+
+
+---
+title: "Time Series Analysis with R" 
+author: "R. Nicholls / D.-L. Couturier / M. Fernandes"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_document:
+    theme: united 
+    highlight: tango
+    code_folding: show    
+    toc: true           
+    toc_depth: 2       
+    toc_float: true     
+    fig_width: 8
+    fig_height: 6
+---
+
+
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
+
+```{r message = FALSE, warning = FALSE, echo = FALSE,eval=FALSE} 
+# change working directory: should be the directory containg the Markdown files:
+setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+
+```
+
+We will consider a dataset corresponding to the Monthly Southern Oscillation Index, measured as the difference in sea-surface air pressure between Darwin and Tahiti.
+
+```{r}
+x=read.table("data/OscillationIndex.txt",header=TRUE)
+x$Index
+plot(x$Index,type="l",ylab="Oscillation Index")
+```
+
+Now let's look at the autocorrelation function corresponding to this dataset:
+```{r}
+acf(x$Index,lag.max=70,main="")
+```
+
+There is clear long-range oscillatory behaviour in the autocorrelation function, indicating that the process is not stationary.
+
+We should consider an integrated (ARIMA) model, so let's calculate and plot the first differences, as well as the associated autocorrelation function:
+```{r}
+plot(diff(x$Index),type="l",ylab="Oscillation Index (d=1)")
+acf(diff(x$Index),lag.max=70,main="")
+```
+
+That's more promising - there is one large negative peak at lag=1, after which the autocorrelation function decays rapidly and stays small. This indicates that this process is covariance stationary. This also indicates that the Moving Average (MA) part of the model may be of order 1. So an ARIMA(0,1,1) model might be a possibility.
+
+Now let's look at the partial autocorrelation function:
+```{r}
+pacf(diff(x$Index),lag.max=70,main="")
+```
+
+This also looks promising. There are four negative peaks before the PACF decays below the significance threshold. That indicates that the AutoRegressive (AR) part of the model may have order up to 4.
+
+Now we'll try to create an ARIMA(0,1,1) model:
+```{r}
+arima(x$Index,order=c(0,1,1))
+```
+
+Note that the standard error of the coefficient indicates significance of the term. 
+
+Now try creating other ARIMA models, and compare.
+
+There are a variety of time series datasets in the in-built R "datasets" package. Type `data()` to get a full list. For example, the datasets called "lh", "ldeaths" and "presidents" are particularly appropriate for this type of analysis. Other datasets also contain time series data, including: "nhtemp", "lynx", "Nile", "co2" and "WWWusage". Explore such datasets - look at autocorrelation and partial autocorrelation functions, identify whether the datasets are suitable for time series analysis, and try fitting ARIMA models.
+
+
+
+
+
