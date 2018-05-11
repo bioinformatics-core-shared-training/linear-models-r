@@ -3,7 +3,7 @@
 
 ---
 title: "Simple Regression with R" 
-author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+author: "R. Nicholls / D.-L. Couturier / M. Fernandes"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:
@@ -23,7 +23,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
@@ -165,7 +165,34 @@ x = order(cars$speed)
 lines(exp(fitted(m5))[x]~cars$speed[x])
 ```
 
-# Section 4: Practical Exercises
+# Section 4: Relationship between the t-test, ANOVA and linear regression
+
+In the ANOVA session we looked at the "diet" dataset, and performed the t-test and ANOVA. Here's a recap:
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# import
+diet = read.csv("data/diet.csv",row.names=1)
+diet$weight.loss = diet$initial.weight - diet$final.weight 
+# comparison
+t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
+summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+```
+
+Note that the p-values for both the t-test and ANOVA are the same. This is because these tests are equivalent (in the 2-sample case). They both test the same hypothesis.
+
+Also, the F-test statistic is equal to the square of the t-test statistic (-2.8348^2 = 8.036). Again, this is only true for the 2-sample case.
+
+Now let's use a different strategy. Instead of directly testing whether there is a difference between the two groups, let's attempt to create a linear model describing the relationship between weight loss and diet type. Indeed, it is possible to construct a linear model where the independent variable(s) are categorical - they do not have to be continuous or even ordinal!
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+summary(lm(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+```
+
+You can see that the p-value corresponding to the diet type term is the same as the p-value from the t-test and ANOVA. Note also that the F-test statistic is the same as given by the ANOVA (in this simple 2-sample case).
+
+So, we are also able to use the linear model to test the hypothesis that there is a difference between the two diet groups, as well as provide a more detailed description of the relationship between weight and diet type. 
+
+# Section 5: Practical Exercises
 
 ## Old Faithful
 

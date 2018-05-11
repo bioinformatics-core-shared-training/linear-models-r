@@ -3,7 +3,7 @@
 
 ---
 title: "Multiple Regression with R" 
-author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+author: "R. Nicholls / D.-L. Couturier / M. Fernandes"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:
@@ -23,7 +23,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
@@ -137,12 +137,36 @@ Are all terms significant?
 
 Now use stepwise regression, performing backward elimination in order to automatically remove inappropriate terms:
 ```{r}
-summary(step(m8))
+library(MASS)
+summary(stepAIC(m8))
 ```
 
 Are all terms significant? Is this model suitable? What are the pro's and con's of this approach? 
 
-# Section 4: Practical Exercises
+# Section 4: Non-Linear Models
+
+The in-built dataset "trees" contains data pertaining to the Volume, Girth and Height of 31 felled black cherry trees. 
+
+In the Simple Regression session, we constructed a simple linear model for Volume using Girth as the independent variable. Using Multiple Regression we trialled various models, including some that had multiple predictor variables and/or involved log-log transformations to explore power relationships.
+
+However, due to limitations of the method, we were not able to explore other options such as a parameterised power relationship with an additive error model. We will now attempt to fit this model:
+
+$y = \beta_0x_1^{\beta_1}x_2^{\beta_2}+\varepsilon$
+
+Parameters for non-linear models may be estimated using the "nls" package in R.
+
+```{r}
+volume = trees$Volume
+height = trees$Height
+girth = trees$Girth
+m1 = nls(volume~beta0*girth^beta1*height^beta2,start=list(beta0=1,beta1=2,beta2=1))
+summary(m1)
+```
+Note that the parameters `beta0`, `beta1` and `beta2` weren't defined prior to the function call - nls knew what to do with them. Also note that we had to provide starting points for the parameters. What happens if you change them?
+
+Are all terms significant? Is this model appropriate? What else could be tried to achieve a better model?
+
+# Section 5: Practical Exercises
 
 ## Puromycin
 
@@ -175,5 +199,4 @@ in a variable.
 `new_model = step(original_model,.~.+privileges+learning+raises+critical+advance)`
 - Which term(s) were added? What is Akaike's Information Criterion (AIC)
 corresponding to the final model? Are all terms in the resulting model significant? Check diagnostic plots. Do you think this is a suitable model?
-
 
