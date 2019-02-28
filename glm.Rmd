@@ -22,7 +22,7 @@ output:
 <!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/GLM.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
-# change working directory: should be the directory containg the Markdown files:
+# change working directory: should be the directory containing the Markdown files:
 setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 # install gamlss package
 install.packages("gamlss")
