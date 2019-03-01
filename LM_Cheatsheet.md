@@ -1,4 +1,5 @@
-## Linear Modelling with R Cheatsheet
+![](logos/CRUK_CI_logo.png)![](logos/LMB_logo_small.png)
+## Linear Modelling with R Course Cheatsheet
   
 | **ANOVA**.  | Notes  |
 | --- | --- |
@@ -11,7 +12,6 @@
 | shapiro.test()  | blah  |
 | bartlett.test() | blah  |
 
-
 | **Simple Regression**  | Notes |  
 | --- | --- |
 | cor()  | blah |   
@@ -19,34 +19,27 @@
 | residuals()  | blah  | 
 | lm()  | bah  |
 
-
 | **Multiple Regression**  | Notes  |
 | --- | --- |
 | AIC()  | blah  |
 | stepAIC()  | blah  |
 | nls()  | blah  |
 
+| **Generalised Linear Models**  | Notes  |
+| --- | --- |
+| install.packages()  | blah  |
+| glm()  | blah  |
+| gamlss()  | blah  |
+| anova()  | blah  |
+| chisq.test()  | blah  |
+| prop.test()  | blah  |
 
-**Generalised Linear Models**.  
-|   |   |
-|---|---|
-|   |   |
-|   |   |
-install.packages().   
-glm().  
-gamlss().  
-anova().  
-chisq.test().  
-prop.test().  
-
-**Time Series and Non-Linear Models**.  
-|   |   |
-|---|---|
-|   |   |
-|   |   |
-acf().   
-pacf().   
-arima().   
+| **Time Series and Non-Linear Models**  | Notes  |
+| --- | --- |
+| acf()  | blah  |
+| pacf()  | blah  |
+| arima()  | blah  |
+  
 
 
 
