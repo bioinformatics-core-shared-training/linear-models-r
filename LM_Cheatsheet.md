@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 ![](logos/CRUK_CI_logo.png)![](logos/LMB_logo_small.png)
 ## Linear Modelling with R Course Cheatsheet
   
