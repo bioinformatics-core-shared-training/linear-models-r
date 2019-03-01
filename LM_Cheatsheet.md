@@ -18,16 +18,14 @@
 | cor.test()  |  blah |   
 | residuals()  | blah  | 
 | lm()  | bah  |
- 
 
-**Multiple Regression**.  
-|   |   |
-|---|---|
-|   |   |
-|   |   |
-AIC().   
-stepAIC().  
-nls().   
+
+| **Multiple Regression**  | Notes  |
+| --- | --- |
+| AIC()  | blah  |
+| stepAIC()  | blah  |
+| nls()  | blah  |
+
 
 **Generalised Linear Models**.  
 |   |   |
