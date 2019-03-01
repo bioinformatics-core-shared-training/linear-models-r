@@ -1,25 +1,23 @@
 ## Linear Modelling with R Cheatsheet
-**ANOVA**.  
-|   |   |
-|---|---|
-| aov()  |   |
-|   |   |
-`aov()`.  
-`oneway.test()`.  
-`kruskal.test`.  
-t.test().  
-tapply().  
-qqnorm().  
-shapiro.test().  
-bartlett.test().   
+  
+| **ANOVA**.  | Notes  |
+| --- | --- |
+| aov()  | Fit an analysis of variance model by a call to lm for each stratum  |
+| oneway.test() | blah  |
+| kruskal.test  |  blah |
+| t.test()  | blah  |
+| tapply()  | blah  |
+| qqnorm()  | blah  |
+| shapiro.test()  | blah  |
+| bartlett.test() | blah  |
 
-.  
-| **Simple Regression**  | . |.   
-|---|---|.   
-| cor()  | . |.   
-| cor.test()  |  . |.   
-| residuals()  | .  |.   
-| lm()  | .  |.   
+
+| **Simple Regression**  | Notes |  
+| --- | --- |
+| cor()  | blah |   
+| cor.test()  |  blah |   
+| residuals()  | blah  | 
+| lm()  | bah  |
  
 
 **Multiple Regression**.  
