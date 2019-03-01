@@ -19,7 +19,7 @@ output:
 
 | **Simple Regression**  | Notes |  
 | --- | --- |
-| cor()  | blah |   
+| cor()  | correlation of x and y (Method is pearson, kendall or spearman) |   
 | cor.test()  |  blah |   
 | residuals()  | blah  | 
 | lm()  | bah  |
