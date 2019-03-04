@@ -36,6 +36,7 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 - Course Introduction
   + Tutorial [HTML](r-recap.nb.html)
   + Tutorial [R markdown](r-recap.Rmd)
+  + Cheat Sheet [PDF](CheatSheet.pdf)
 - ANOVA
   + Slides [PDF](ANOVA.pdf)
   + Tutorial [HTML](ANOVA.html)
