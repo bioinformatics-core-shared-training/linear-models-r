@@ -36,12 +36,11 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 - Course Introduction
   + Tutorial [HTML](r-recap.nb.html)
   + Tutorial [R markdown](r-recap.Rmd)
-  + Cheat Sheet [PDF](CheatSheet.pdf)
+  + Cheat Sheet [PDF](cheat_sheet.pdf)
 - ANOVA
   + Slides [PDF](ANOVA.pdf)
   + Tutorial [HTML](ANOVA.html)
   + Tutorial [R markdown](ANOVA.Rmd)
-  + Tutorial with solutions [R markdown](ANOVA+.Rmd)
 - Simple Regression
   + Slides [PDF](simple_regression.pdf)
   + Tutorial [HTML](simple_regression.html)
@@ -54,7 +53,6 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Slides [PDF](glm.pdf)
   + Tutorial [HTML](glm.html)
   + Tutorial [R markdown](glm.Rmd)
-  + Tutorial with solutions [R markdown](glm+.Rmd)  
 - Time Series and Non-Linear Models
   + Slides [PDF](nonlinear_and_time_series.pdf)
   + Tutorial [HTML](time_series_and_nonlinear_models.html)
