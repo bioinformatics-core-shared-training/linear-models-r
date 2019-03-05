@@ -69,3 +69,5 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 
 ## Going further
 - [Transforming data](http://rcompanion.org/handbook/I_12.html)
+- [Handbook of Biological Statistics](http://www.biostathandbook.com/)
+
