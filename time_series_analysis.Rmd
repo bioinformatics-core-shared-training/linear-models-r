@@ -23,7 +23,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE,eval=FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
@@ -66,9 +66,4 @@ Note that the standard error of the coefficient indicates significance of the te
 
 Now try creating other ARIMA models, and compare.
 
-There are a variety of time series datasets in the in-built R "datasets" package. Type `data()` to get a full list. For example, the datasets called "lh", "ldeaths" and "presidents" are particularly appropriate for this type of analysis. Other datasets also contain time series data, including: "nhtemp", "lynx", "Nile", "co2" and "WWWusage". Explore such datasets - look at autocorrelation and partial autocorrelation functions, identify whether the datasets are suitable for time series analysis, and try fitting ARIMA models.
-
-
-
-
-
+There are a variety of time series datasets in the in-built R "datasets" package. Type `data()` to get a full list. For example, the datasets called `lh`, `ldeaths` and `presidents` are particularly appropriate for this type of analysis. Other datasets also contain time series data, including: `nhtemp`, `lynx`, `Nile`, `co2` and `WWWusage`. Explore such datasets - look at autocorrelation and partial autocorrelation functions, identify whether the datasets are suitable for time series analysis, and try fitting ARIMA models.

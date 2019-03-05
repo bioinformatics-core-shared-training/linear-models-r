@@ -1,0 +1,342 @@
+
+
+
+---
+title: "Simple Regression with R" 
+author: "R. Nicholls / D.-L. Couturier / M. Fernandes"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_document:
+    theme: united 
+    highlight: tango
+    code_folding: show    
+    toc: true           
+    toc_depth: 2       
+    toc_float: true     
+    fig_width: 8
+    fig_height: 6
+---
+
+
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
+
+```{r message = FALSE, warning = FALSE, echo = FALSE} 
+# change working directory: should be the directory containg the Markdown files:
+#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+
+```
+
+# Section 1: Correlation Coefficients
+
+We'll start by generating some synthetic data to investigate correlation coefficients.
+
+Generate 50 random numbers in the range [0,50]:
+```{r}
+x = runif(50,0,50)
+```
+
+Now let's generate some y-values that are linearly correlated with the x-values with gradient=1, applying a random Normal offset (with sd=5):
+```{r}
+y = x + rnorm(50,0,5)
+```
+
+Plotting y against x, you'll observe a positive linear relationship:
+```{r}
+plot(y~x)
+```
+
+This strong linear relationship is reflected in the correlation coefficient and in the coefficient of determination (R^2):
+```{r}
+pearson_cor_coef = cor(x,y)
+list("cor"=pearson_cor_coef,"R^2"=pearson_cor_coef^2)
+```
+
+If the data exhibit a negative linear correlation then the correlation coefficient will become strong and negative, whilst the R^2 value will remain strong and positive:
+```{r}
+y = -x + rnorm(50,0,5)
+plot(y~x)
+pearson_cor_coef = cor(x,y)
+list("cor"=pearson_cor_coef,"R^2"=pearson_cor_coef^2)
+```
+
+If data are uncorrelated then both the correlation coefficient and R^2 values will be close to zero:
+```{r}
+y = rnorm(50,0,5)
+plot(y~x)
+pearson_cor_coef = cor(x,y)
+list("cor"=pearson_cor_coef,"R^2"=pearson_cor_coef^2)
+```
+
+The significance of a correlation can be tested using `cor.test()`, which also provides a 95% confidence interval on the correlation:
+```{r}
+cor.test(x,y)
+```
+
+In this case, the value 0 is contained within the confidence interval, indivating that there is insufficient evidence to reject the null hypothesis that the true correlation is equal to zero.
+
+# Section 2: Simple Regression
+
+Now let's look at some real data.
+
+The in-built dataset `trees` contains data pertaining to the `Volume`, `Girth` and `Height` of 31 felled black cherry trees.
+
+We will now attempt to construct a simple linear model that uses `Girth` to predict `Volume`.
+```{r}
+plot(Volume~Girth,data=trees)
+m1 = lm(Volume~Girth,data=trees)
+abline(m1)
+cor.test(trees$Volume,trees$Girth)
+```
+
+It is evident that `Volume` and `Girth` are highly correlated.
+
+The summary for the linear model provides information regarding the quality of the model:
+```{r}
+summary(m1)
+```
+
+Model residuals can be readily accessed using the `residuals()` function:
+```{r}
+hist(residuals(m1),breaks=10,col="light grey")
+```
+
+Diagnostic plots for the model can reveal whether or not modelling assumptions are reasonable. In this case, there is visual evidence to suggest that the assumptions are not satisfied - note in particular the trend observed in the plot of residuals vs fitted values:
+```{r}
+plot(m1)
+```
+
+# Section 3: Assessing the quality of linear models
+
+Let's see what happens if we try to describe a non-linear relationship using a linear model. Consider the sine function in the range [0,1.5*pi):
+```{r}
+z = seq(0,1.5*pi,0.2)
+plot(sin(z)~z)
+m2 = lm(sin(z)~z)
+abline(m2)
+```
+
+In this case, it is clear that a linear model is not appropriate for describing the relationship. However, we are able to fit a linear model, and the linear model summary does not identify any major concerns:
+```{r}
+summary(m2)
+```
+Here we see that the overall p-value is low enough to suggest that the model has significant utility, and both terms (the intercept and the coefficient of `z`) are significantly different from zero. The R^2 value of 0.5422 is high enough to indicate that there is a reasonably strong correlation between `sin(z)` and `z` in this range. 
+
+This information is misleading, as we know that a linear model is inappropriate in this case. Indeed, the linear model summary does not check whether the underlying model assumptions are satisfied. 
+
+By observing strong patterns in the diagnostic plots, we can see that the modelling assumptions are not satisified in this case.
+```{r}
+plot(m2)
+```
+
+
+# Section 4: Modelling Non-Linear Relationships
+
+It is sometimes possible to use linear models to describe non-linear relationships (which is perhaps counterintuitive!). This can be achieved by applying transformations to the variable(s) in order to linearise the relationship, whilst ensuring that modelling assumptions are satisfied.
+
+Another in-built dataset `cars` provides the speeds and associated stopping distances of cars in the 1920s.
+
+Let's construct a linear model to predict stopping distance using speed:
+
+```{r}
+plot(dist~speed,data=cars)
+m3 = lm(dist~speed,data=cars)
+abline(m3)
+summary(m3)
+```
+
+The model summary indicates that the intercept term does not have significant utility. So that term could/should be removed from the model.
+
+In addition, the plot of residuals versus fitted values indicates potential issues with variance stability:
+```{r}
+plot(m3)
+```
+
+In this case, variance stability can be aided by a square-root transformation of the response variable:
+```{r}
+plot(sqrt(dist)~speed,data=cars)
+m4 = lm(sqrt(dist)~speed,data=cars)
+abline(m4)
+plot(m4)
+summary(m4)
+```
+
+The R^2 value is improved over the previous model.
+Note that again that the intercept term is not significant.
+
+We'll now try a log-log transformation, that is applying a log transformation to the predictor and response variables. This represents a power relationship between the two variables.
+```{r}
+plot(log(dist)~log(speed),data=cars)
+m5 = lm(log(dist)~log(speed),data=cars)
+abline(m5)
+plot(m5)
+summary(m5)
+```
+
+The R^2 value is improved, and the diagnostic plots don't look too unreasonable. However, again the intercept term does not have significant utility. So we'll now remove it from the model:
+```{r}
+m6 = lm(log(dist)~0+log(speed),data=cars)
+plot(m6)
+summary(m6)
+```
+
+This model seems reasonable. However, remember that R^2 values corresponding to models without an intercept aren't meaningful (or at least can't be compared against models with an intercept term).
+
+We can now transform the model back, and display the regression curve on the plot:
+```{r}
+plot(dist~speed,data=cars)
+x = order(cars$speed)
+lines(exp(fitted(m6))[x]~cars$speed[x])
+```
+
+# Section 5: Relationship between the t-test, ANOVA and linear regression
+
+In the ANOVA session we looked at the `diet` dataset, and performed the t-test and ANOVA. Here's a recap:
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# import
+diet = read.csv("data/diet.csv",row.names=1)
+diet$weight.loss = diet$initial.weight - diet$final.weight 
+# comparison
+t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
+summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+```
+
+Note that the p-values for both the t-test and ANOVA are the same. This is because these tests are equivalent (in the 2-sample case). They both test the same hypothesis.
+
+Also, the F-test statistic is equal to the square of the t-test statistic (-2.8348^2 = 8.036). Again, this is only true for the 2-sample case.
+
+Now let's use a different strategy. Instead of directly testing whether there is a difference between the two groups, let's attempt to create a linear model describing the relationship between `weight.loss` and `diet.type`. Indeed, it is possible to construct a linear model where the independent variable(s) are categorical - they do not have to be continuous or even ordinal!
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+summary(lm(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+```
+
+You can see that the p-value corresponding to the `diet.type` term is the same as the overall p-value of the linear model, which is also the same as the p-value from the t-test and ANOVA. Note also that the F-test statistic is the same as given by the ANOVA.
+
+So, we are also able to use the linear model to test the hypothesis that there is a difference between the two diet groups, as well as provide a more detailed description of the relationship between `weight.loss` and `diet.type`. 
+
+# Section 6: Practical Exercises
+
+## Old Faithful
+
+The inbuilt R dataset `faithful` pertains to the waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
+
+- Create a simple linear regression model that models the eruption duration `faithful$eruptions` using waiting time `faithful$waiting` as the independent variable, storing the model in a variable. Look at the summary of the model.
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+m7 = lm(eruptions~waiting,data=faithful)
+summary(m7)
+```
++ What are the values of the estimates of the intercept and coefficient of 'waiting'?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# intercept = -1.874016
+# coef of waiting = 0.075628
+```
++ What is the R^2 value?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# R^2 = 0.8115
+```
++ Does the model have significant utility?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# Yes, the model does have significant utility
+```
++ Are neither, one, or both of the parameters significantly different from zero?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# Both of the parameters are significantly different from zero
+```
++ Can you conclude that there is a linear relationship between the two variables?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# In the absence of other information, this summary would indicate a linear relationship between the two variables. However, we cannot conclude that without first checking that the modelling assumptions have been satistified...
+```
+- Plot the eruption duration against waiting time. Is there anything noticeable about the data?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(eruptions~waiting,data=faithful)
+# The observations appear to cluster in two groups.
+```
+- Draw the regression line corresponding to your model onto the plot. Based on this graphical representation, does the model seem reasonable?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(eruptions~waiting,data=faithful)
+abline(m7)
+# At a glance, the model seems to describe the overall dependence of eruptions on waiting time reasonably well. However, this is misleading...
+```
+- Generate the four diagnostic plots corresponding to your model. Contemplate the appropriateness of the model for describing the relationship between eruption duration and waiting time.
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(m7)
+# There is strong systematic behaviour in the plot of residuals versus fitted values. This indicates that the relationship/dependence is different or more complicated than can be described with the simple linear model.
+# Specifically, it should be identified what causes observations to fall into one or other of the two groups. Differences between the two groups should be accounted for when modelling the relationship. It seems that the direct dependence of `eruptions` on `waiting` is not as strong as is indicated by the simple linear model.
+```
+
+## Anscombe datasets
+
+Consider the inbuilt R dataset `anscombe`. This dataset contains four x-y datasets, contained in the columns: (x1,y1), (x2,y2), (x3,y3) and (x4,y4).
+
+- For each of the four datasets, calculate and test the correlation between the x and y variables. What do you conclude?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+cor(anscombe$x1,anscombe$y1)
+cor.test(anscombe$x1,anscombe$y1)
+cor(anscombe$x2,anscombe$y2)
+cor.test(anscombe$x2,anscombe$y2)
+cor(anscombe$x3,anscombe$y3)
+cor.test(anscombe$x3,anscombe$y3)
+cor(anscombe$x4,anscombe$y4)
+cor.test(anscombe$x4,anscombe$y4)
+# All four datasets seem to exhibit positive linear relationships, with the same correlation and the same p-value.
+```
+- For each of the four datasets, create a linear model that regresses y on x. Look at the summaries corresponding to these models. What do you conclude?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+summary(lm(anscombe$y1~anscombe$x1))
+summary(lm(anscombe$y2~anscombe$x2))
+summary(lm(anscombe$y3~anscombe$x3))
+summary(lm(anscombe$y4~anscombe$x4))
+# The summaries are essentially identical for all four linear models.
+```
+- For each of the four datasets, create a plot of y against x. What do you conclude?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(anscombe$y1~anscombe$x1)
+plot(anscombe$y2~anscombe$x2)
+plot(anscombe$y3~anscombe$x3)
+plot(anscombe$y4~anscombe$x4)
+# The four datasets are very different, with very different relationships between the x and y variables.
+# This demonstrates how very different datasets can appear to be very similar when looking solely at summary statistics.
+# We conclude that it is always important to peform exploratory data analysis, and look at the data before modelling.
+```
+
+
+## Pharmacokinetics of Indomethacin
+
+Consider the inbuilt R dataset `Indometh`, which contains data on the pharmacokinetics of indometacin.
+
+- Plot `Indometh$time` versus `Indometh$conc` (concentration). What is the nature of the relationship
+between `time` and `conc`?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(time~conc,data=Indometh)
+# There is a non-linear negative relationship between time and conc
+```
+- Apply monotonic transformations to the data so that a simple linear regression model can be used to model the relationship (ensure both linearity and stabilised variance, within reason). Create a plot of the transformed data, to confirm that the relationship seems linear.
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(log(time)~log(conc),data=Indometh)
+```
+- After creating the linear model, inspect the diagnostic plots to ensure that the
+assumptions are not violated (too much). Are there any outliers with large influence? What are the parameter estimates? Are both terms significant?
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+m8 = lm(log(time)~log(conc),data=Indometh)
+plot(m8)
+# The diagnostic plots indicate that the residuals aren't perfectly Normally distributed, but the modelling assumptions aren't violated so much as to inhibit construction of a model.
+summary(m8)
+# Intercept = -0.4203
+# Coefficient of log(conc) = -0.9066
+# Both terms are significantly different from zero.
+```
+- Add a line to the plot showing the linear relationship between the transformed data.
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(log(time)~log(conc),data=Indometh)
+abline(m8)
+```
+- Now regenerate the original plot of `time` versus `conc` (i.e. the untransformed
+data). Using the `lines` function, add a curve to the plot corresponding to the
+fitted values of the model.
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+plot(time~conc,data=Indometh)
+idx <- order(Indometh$conc)
+lines(exp(fitted(m8))[idx]~Indometh$conc[idx])
+```

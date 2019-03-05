@@ -23,13 +23,13 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
 # Section 1: Multiple Regression
 
-The in-built dataset "trees" contains data pertaining to the Volume, Girth and Height of 31 felled black cherry trees. In the Simple Regression session, we constructed a simple linear model for Volume using Girth as the independent variable. Now we will expand this by considering Height as another predictor.
+The in-built dataset `trees` contains data pertaining to the `Volume`, `Girth` and `Height` of 31 felled black cherry trees. In the Simple Regression session, we constructed a simple linear model for `Volume` using `Girth` as the independent variable. Now we will expand this by considering `Height` as another predictor.
 
 Start by plotting the dataset:
 ```{r}
@@ -38,38 +38,40 @@ plot(trees)
 
 This plots all variables against each other, enabling visual information about correlations within the dataset.
 
-Re-create the original model of Volume against Girth:
+Re-create the original model of `Volume` against `Girth`:
 ```{r}
 m1 = lm(Volume~Girth,data=trees)
 summary(m1)
 ```
 
-Now include Height as an additional variable:
+Now include `Height` as an additional variable:
 ```{r}
 m2 = lm(Volume~Girth+Height,data=trees)
 summary(m2)
 ```
 
-Note that the R^2 has improved, yet Height does not have significant utility.
+Note that the R^2 has improved, yet the `Height` term is less significant than the other two parameters.
 
-Try including the interaction term between Girth and Height:
+Try including the interaction term between `Girth` and `Height`:
 ```{r}
 m3 = lm(Volume~Girth*Height,data=trees)
 summary(m3)
 ```
 
-Now, all terms are significant, including Height.
+All terms are highly significant. Note that the `Height` is more significant than in the previous model, despite the introduction of an additional parameter.
 
 We'll now try a different functional form - rather than looking for an additive model, we can explore a multiplicative model by applying a log-log transformation (leaving out the interaction term for now).
 ```{r}
 m4 = lm(log(Volume)~log(Girth)+log(Height),data=trees)
 summary(m4)
-confint(m4)
 ```
 
 All terms are significant. Note that the residual standard error is much lower than for the previous models. However, this value cannot be compared with the previous models due to transforming the response variable. The R^2 value has increased further, despite reducing the number of parameters from four to three.
+```{r}
+confint(m4)
+```
 
-Looking at the confidence intervals for the parameters reveals that the estimated power of Girth is around 2, and Height around 1. This makes a lot of sense, given the well-known dimensional relationship between Volume, Girth and Height!
+Looking at the confidence intervals for the parameters reveals that the estimated power of `Girth` is around 2, and `Height` around 1. This makes a lot of sense, given the well-known dimensional relationship between `Volume`, `Girth` and `Height`!
 
 For completeness, we'll now add the interaction term.
 ```{r}
@@ -79,7 +81,7 @@ summary(m5)
 
 The R^2 value has increased (of course, as all we've done is add an additional parameter), but interestingly none of the four terms are significant. This means that none of the individual terms alone are vital for the model - there is duplication of information between the variables. So we will revert back to the previous model.
 
-Given that it would be reasonable to expect the power of Girth to be 2, and Height to be 1, we will now fix those parameters, and instead just estimate the one remaining parameter.
+Given that it would be reasonable to expect the power of `Girth` to be 2, and Height to be 1, we will now fix those parameters, and instead just estimate the one remaining parameter.
 ```{r}
 m6 = lm(log(Volume)-log((Girth^2)*Height)~1,data=trees)
 summary(m6)
@@ -127,7 +129,7 @@ Whilst the AIC can help differentiate between similar models, it cannot help dec
 
 # Section 3: Stepwise Regression
 
-The in-built dataset "swiss" contains data pertaining to fertility, along with a variety of socioeconomic indicators. We want to select a sensible model using stepwise regression. First regress Fertility agains all available indicators:
+The in-built dataset `swiss` contains data pertaining to fertility, along with a variety of socioeconomic indicators. We want to select a sensible model using stepwise regression. First regress `Fertility` agains all available indicators:
 ```{r}
 m8 = lm(Fertility~.,data=swiss)
 summary(m8)
@@ -145,24 +147,24 @@ Are all terms significant? Is this model suitable? What are the pro's and con's 
 
 # Section 4: Non-Linear Models
 
-The in-built dataset "trees" contains data pertaining to the Volume, Girth and Height of 31 felled black cherry trees. 
+The in-built dataset `trees` contains data pertaining to the `Volume`, `Girth` and `Height` of 31 felled black cherry trees. 
 
-In the Simple Regression session, we constructed a simple linear model for Volume using Girth as the independent variable. Using Multiple Regression we trialled various models, including some that had multiple predictor variables and/or involved log-log transformations to explore power relationships.
+In the Simple Regression session, we constructed a simple linear model for `Volume` using `Girth` as the independent variable. Using Multiple Regression we trialled various models, including some that had multiple predictor variables and/or involved log-log transformations to explore power relationships.
 
 However, due to limitations of the method, we were not able to explore other options such as a parameterised power relationship with an additive error model. We will now attempt to fit this model:
 
 $y = \beta_0x_1^{\beta_1}x_2^{\beta_2}+\varepsilon$
 
-Parameters for non-linear models may be estimated using the "nls" package in R.
+Parameters for non-linear models may be estimated using the `nls` package in R.
 
 ```{r}
 volume = trees$Volume
 height = trees$Height
 girth = trees$Girth
-m1 = nls(volume~beta0*girth^beta1*height^beta2,start=list(beta0=1,beta1=2,beta2=1))
-summary(m1)
+m9 = nls(volume~beta0*girth^beta1*height^beta2,start=list(beta0=1,beta1=2,beta2=1))
+summary(m9)
 ```
-Note that the parameters `beta0`, `beta1` and `beta2` weren't defined prior to the function call - nls knew what to do with them. Also note that we had to provide starting points for the parameters. What happens if you change them?
+Note that the parameters `beta0`, `beta1` and `beta2` weren't defined prior to the function call - `nls` knew what to do with them. Also note that we had to provide starting points for the parameters. What happens if you change them?
 
 Are all terms significant? Is this model appropriate? What else could be tried to achieve a better model?
 
@@ -170,33 +172,32 @@ Are all terms significant? Is this model appropriate? What else could be tried t
 
 ## Puromycin
 
-The in-built R dataset "Puromycin contains data regarding the reaction velocity versus
+The in-built R dataset `Puromycin` contains data regarding the reaction velocity versus
 substrate concentration in an enzymatic reaction involving untreated cells or cells
 treated with Puromycin.
 
-- Plot conc (concentration) against rate. What is the nature of the relationship
-between conc and rate?
+- Plot `conc` (concentration) against `rate`. What is the nature of the relationship
+between `conc` and `rate`?
 - Find a transformation that linearises the data and stabilises the variance,
 making it possible to use linear regression. Create the corresponding linear
 regression model. Are all terms significant?
-- Add the state term to the model. What type of variable is this? Is the
+- Add the `state` term to the model. What type of variable is this? Is the
 inclusion of this term appropriate?
-- Now add a term representing the interaction between rate and state. Are all
+- Now add a term representing the interaction between `rate` and `state`. Are all
 terms significant? What can you conclude?
 - Given this information, create the regression model you believe to be the most
-appropriate for modelling conc. Regenerate the plot of conc against rate.
+appropriate for modelling `conc`. Regenerate the plot of `conc` against `rate`.
 Draw curves corresponding to the fitted values of the final model onto this
 plot (note that two separate curves should be drawn, corresponding to the
-two levels of state).
+two levels of `state`).
 
 ## Attitude
 
-The in-built R dataset "attitude" contains data from a survey of clerical employees.
+The in-built R dataset `attitude` contains data from a survey of clerical employees.
 
-- Create a linear model regressing rating on complaints, and store the model
+- Create a linear model regressing `rating` on `complaints`, and store the model
 in a variable.
 - Use the step function to perform forward selection stepwise regression, in order to automatically add appropriate terms, using a command similar to:
 `new_model = step(original_model,.~.+privileges+learning+raises+critical+advance)`
-- Which term(s) were added? What is Akaike's Information Criterion (AIC)
-corresponding to the final model? Are all terms in the resulting model significant? Check diagnostic plots. Do you think this is a suitable model?
+- Which term(s) were added? What is Akaike's Information Criterion (AIC) corresponding to the final model? Are all terms in the resulting model significant? Check diagnostic plots. Do you think this is a suitable model?
 
