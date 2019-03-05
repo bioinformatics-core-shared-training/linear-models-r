@@ -1,9 +1,5 @@
-
-
-
 ---
-title: "ANOVA with R: 
-analysis of the *diet* dataset" 
+title: "ANOVA with R" 
 author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
@@ -20,11 +16,11 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/ANOVA.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/ANOVA.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
 
 ```
 

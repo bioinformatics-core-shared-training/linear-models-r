@@ -1,6 +1,3 @@
-
-
-
 ---
 title: "GLM with R" 
 author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
@@ -19,13 +16,13 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/GLM.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/glm.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containing the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+setwd("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
 # install gamlss package
-install.packages("gamlss")
+# install.packages("gamlss")
 ```
 
 # Section 1: Logistic regression
