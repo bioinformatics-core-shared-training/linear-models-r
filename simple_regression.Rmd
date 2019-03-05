@@ -23,7 +23,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
 
 ```
 
@@ -79,9 +79,9 @@ In this case, the value 0 is contained within the confidence interval, indivatin
 
 Now let's look at some real data.
 
-The in-built dataset "trees" contains data pertaining to the Volume, Girth and Height of 31 felled black cherry trees.
+The in-built dataset `trees` contains data pertaining to the `Volume`, `Girth` and `Height` of 31 felled black cherry trees.
 
-We will now attempt to construct a simple linear model that uses Girth to predict Volume.
+We will now attempt to construct a simple linear model that uses `Girth` to predict `Volume`.
 ```{r}
 plot(Volume~Girth,data=trees)
 m1 = lm(Volume~Girth,data=trees)
@@ -89,7 +89,7 @@ abline(m1)
 cor.test(trees$Volume,trees$Girth)
 ```
 
-It is evident that Volume and Girth are highly correlated.
+It is evident that `Volume` and `Girth` are highly correlated.
 
 The summary for the linear model provides information regarding the quality of the model:
 ```{r}
@@ -106,11 +106,35 @@ Diagnostic plots for the model can reveal whether or not modelling assumptions a
 plot(m1)
 ```
 
-# Section 3: Modelling Non-Linear Relationships
+# Section 3: Assessing the quality of linear models
 
-Perhaps counterintuitively, it is possible to use linear models to model non-linear relationships.
+Let's see what happens if we try to describe a non-linear relationship using a linear model. Consider the sine function in the range [0,1.5*pi):
+```{r}
+z = seq(0,1.5*pi,0.2)
+plot(sin(z)~z)
+m0 = lm(sin(z)~z)
+abline(m0)
+```
 
-Another in-built dataset "cars" provides the speeds and associated stopping distances of cars in the 1920s.
+In this case, it is clear that a linear model is not appropriate for describing the relationship. However, we are able to fit a linear model, and the linear model summary does not identify any major concerns:
+```{r}
+summary(m0)
+```
+Here we see that the overall p-value is low enough to suggest that the model has significant utility, and both terms (the intercept and the coefficient of `z`) are significantly different from zero. The R^2 value of 0.5422 is high enough to indicate that there is a reasonably strong correlation between `sin(z)` and `z` in this range. 
+
+This information is misleading, as we know that a linear model is inappropriate in this case. Indeed, the linear model summary does not check whether the underlying model assumptions are satisfied. 
+
+By observing strong patterns in the diagnostic plots, we can see that the modelling assumptions are not satisified in this case.
+```{r}
+plot(m0)
+```
+
+
+# Section 4: Modelling Non-Linear Relationships
+
+It is sometimes possible to use linear models to describe non-linear relationships (which is perhaps counterintuitive!). This can be achieved by applying transformations to the variable(s) in order to linearise the relationship, whilst ensuring that modelling assumptions are satisfied.
+
+Another in-built dataset `cars` provides the speeds and associated stopping distances of cars in the 1920s.
 
 Let's construct a linear model to predict stopping distance using speed:
 
@@ -140,7 +164,7 @@ summary(m3)
 The R^2 value is improved over the previous model.
 Note that again that the intercept term is not significant.
 
-We'll now try a log-log transformation, that is applying a log transformation to be predictor and response variables. This represents a power relationship between the two variables.
+We'll now try a log-log transformation, that is applying a log transformation to the predictor and response variables. This represents a power relationship between the two variables.
 ```{r}
 plot(log(dist)~log(speed),data=cars)
 m4 = lm(log(dist)~log(speed),data=cars)
@@ -165,9 +189,9 @@ x = order(cars$speed)
 lines(exp(fitted(m5))[x]~cars$speed[x])
 ```
 
-# Section 4: Relationship between the t-test, ANOVA and linear regression
+# Section 5: Relationship between the t-test, ANOVA and linear regression
 
-In the ANOVA session we looked at the "diet" dataset, and performed the t-test and ANOVA. Here's a recap:
+In the ANOVA session we looked at the `diet` dataset, and performed the t-test and ANOVA. Here's a recap:
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
 # import
@@ -182,25 +206,25 @@ Note that the p-values for both the t-test and ANOVA are the same. This is becau
 
 Also, the F-test statistic is equal to the square of the t-test statistic (-2.8348^2 = 8.036). Again, this is only true for the 2-sample case.
 
-Now let's use a different strategy. Instead of directly testing whether there is a difference between the two groups, let's attempt to create a linear model describing the relationship between weight loss and diet type. Indeed, it is possible to construct a linear model where the independent variable(s) are categorical - they do not have to be continuous or even ordinal!
+Now let's use a different strategy. Instead of directly testing whether there is a difference between the two groups, let's attempt to create a linear model describing the relationship between `weight.loss` and `diet.type`. Indeed, it is possible to construct a linear model where the independent variable(s) are categorical - they do not have to be continuous or even ordinal!
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
 summary(lm(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
 ```
 
-You can see that the p-value corresponding to the diet type term is the same as the p-value from the t-test and ANOVA. Note also that the F-test statistic is the same as given by the ANOVA (in this simple 2-sample case).
+You can see that the p-value corresponding to the `diet.type` term is the same as the overall p-value of the linear model, which is also the same as the p-value from the t-test and ANOVA. Note also that the F-test statistic is the same as given by the ANOVA.
 
-So, we are also able to use the linear model to test the hypothesis that there is a difference between the two diet groups, as well as provide a more detailed description of the relationship between weight and diet type. 
+So, we are also able to use the linear model to test the hypothesis that there is a difference between the two diet groups, as well as provide a more detailed description of the relationship between `weight.loss` and `diet.type`. 
 
-# Section 5: Practical Exercises
+# Section 6: Practical Exercises
 
 ## Old Faithful
 
-The inbuilt R dataset faithful pertains to the waiting time between eruptions and
+The inbuilt R dataset `faithful` pertains to the waiting time between eruptions and
 the duration of the eruption for the Old Faithful geyser in Yellowstone National
 Park, Wyoming, USA.
 
-- Create a simple linear regression model that models the eruption duration using waiting time as the independent variable, storing the model in a variable. Look at the summary of the model.
+- Create a simple linear regression model that models the eruption duration `faithful$eruptions` using waiting time `faithful$waiting` as the independent variable, storing the model in a variable. Look at the summary of the model.
     + What are the values of the estimates of the intercept and coefficient of 'waiting'?
     + What is the R^2 value?
     + Does the model have significant utility?
@@ -213,7 +237,7 @@ about the data?
 
 ## Anscombe datasets
 
-Consider the inbuilt R dataset anscombe. This dataset contains four x-y datasets,
+Consider the inbuilt R dataset `anscombe`. This dataset contains four x-y datasets,
 contained in the columns: (x1,y1), (x2,y2), (x3,y3) and (x4,y4).
 
 - For each of the four datasets, calculate and test the correlation between the x and y
@@ -225,15 +249,15 @@ conclude?
 
 ## Pharmacokinetics of Indomethacin
 
-Consider the inbuilt R dataset Indometh, which contains data on the pharmacokinetics of indometacin.
+Consider the inbuilt R dataset `Indometh`, which contains data on the pharmacokinetics of indometacin.
 
-- Plot time versus conc (concentration). What is the nature of the relationship
-between time and conc?
+- Plot `Indometh$time` versus `Indometh$conc` (concentration). What is the nature of the relationship
+between `time` and `conc`?
 - Apply monotonic transformations to the data so that a simple linear regression model can be used to model the relationship (ensure both linearity and stabilised variance, within reason). Create a plot of the transformed data, to confirm that the relationship seems linear.
 - After creating the linear model, inspect the diagnostic plots to ensure that the
 assumptions are not violated (too much). Are there any outliers with large influence? What are the parameter estimates? Are both terms significant?
 - Add a line to the plot showing the linear relationship between the transformed data.
-- Now regenerate the original plot of time versus conc (i.e. the untransformed
-data). Using the lines function, add a curve to the plot corresponding to the
+- Now regenerate the original plot of `time` versus `conc` (i.e. the untransformed
+data). Using the `lines` function, add a curve to the plot corresponding to the
 fitted values of the model.
 
