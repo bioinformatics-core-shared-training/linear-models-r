@@ -4,7 +4,7 @@
 
 The course will cover ANOVA, linear regression and some extensions. It will be a mixture of lectures and hands-on time using RStudio to analyse data.
 
-[Timetable](timetable.md)
+[Timetable](timetable.pdf)
 
 # Aims: During this course you will learn about: 
 
