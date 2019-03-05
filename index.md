@@ -66,3 +66,6 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
  
  - [Introduction to Solving Biological Problems with R](http://cambiotraining.github.io/r-intro/)
  - [Introduction to Statistical Analysis](http://bioinformatics-core-shared-training.github.io/IntroductionToStats/)
+
+## Going further
+- [Transforming data](http://rcompanion.org/handbook/I_12.html)
