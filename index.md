@@ -38,9 +38,10 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Tutorial [R markdown](r-recap.Rmd)
   + Cheat Sheet [PDF](cheat_sheet.pdf)
 - ANOVA
-  + Slides [PDF](ANOVA.pdf)
-  + Tutorial [HTML](ANOVA.html)
-  + Tutorial [R markdown](ANOVA.Rmd)
+  + Slides [PDF](anova.pdf)
+  + Tutorial [HTML](anova.html)
+  + Tutorial [R markdown](anova.Rmd)
+  + Tutorial with solutions [R markdown](anova+.Rmd)
 - Simple Regression
   + Slides [PDF](simple_regression.pdf)
   + Tutorial [HTML](simple_regression.html)
@@ -53,10 +54,11 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Slides [PDF](glm.pdf)
   + Tutorial [HTML](glm.html)
   + Tutorial [R markdown](glm.Rmd)
-- Time Series and Non-Linear Models
-  + Slides [PDF](nonlinear_and_time_series.pdf)
-  + Tutorial [HTML](time_series_and_nonlinear_models.html)
-  + Tutorial [R markdown](time_series_and_nonlinear_models.Rmd)
+  + Tutorial with solutions [R markdown](glm+.Rmd)
+- Time Series Models
+  + Slides [PDF](time_series.pdf)
+  + Tutorial [HTML](time_series_analysis.html)
+  + Tutorial [R markdown](time_series_analysis.Rmd)
   
   
 
@@ -69,5 +71,4 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
 
 ## Going further
 - [Transforming data](http://rcompanion.org/handbook/I_12.html)
-- [Handbook of Biological Statistics](http://www.biostathandbook.com/)
 
