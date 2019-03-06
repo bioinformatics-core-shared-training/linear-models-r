@@ -1,0 +1,177 @@
+---
+title: "ANOVA with R" 
+author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_document:
+    theme: united 
+    highlight: tango
+    code_folding: show    
+    toc: true           
+    toc_depth: 2       
+    toc_float: true     
+    fig_width: 8
+    fig_height: 6
+---
+
+
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/ANOVA.Rmd") --->
+
+```{r message = FALSE, warning = FALSE, echo = FALSE} 
+# change working directory: should be the directory containg the Markdown files:
+setwd("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
+
+```
+
+
+A full version of the dataset *diet* may be found online on the U. of Sheffield website <https://www.sheffield.ac.uk/polopoly_fs/1.570199!/file/stcp-Rdataset-Diet.csv>. 
+
+A slightly modified version is available in the data file is stored under data/diet.csv. The data set contains information on 76 people who undertook one of three diets (referred to as diet _A_, _B_ and _C_). There is background information such as age, gender, and height. The aim of the study was to see which diet was best for losing weight.
+
+
+# Section 1: importation and descriptive analysis
+
+Lets start by
+
+* importing the data set *diet* with the function `read.csv()`  
+* defining a new column *weight.loss*, corresponding to the difference between the initial and final weights (respectively the corresponding to the columns `initial.weight` and `final.weight` of the dataset) 
+* displaying _weight loss_ per _diet type_ (column `diet.type`) by means of a boxplot.
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+diet = read.csv("data/diet.csv",row.names=1)
+diet$weight.loss = diet$initial.weight - diet$final.weight 
+boxplot(weight.loss~diet.type,data=diet,col="light gray",
+        ylab = "Weight loss (kg)", xlab = "Diet type")
+abline(h=0,col="blue")
+```
+
+# Section 2: ANOVA
+
+Lets 
+
+* perform a Fisher's, Welch's and Kruskal-Wallis one-way ANOVA, respectively by means of the functions `aov()`, `oneway.test()` and `kruskal.test`,  
+* display and analyse the results: Use the function `summary()` to display the results of an R object of class `aov` and the function `print()` otherwise.
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+diet.fisher  = aov(weight.loss~diet.type,data=diet)
+diet.welch   = oneway.test(weight.loss~diet.type,data=diet)
+diet.kruskal = kruskal.test(weight.loss~diet.type,data=diet)
+
+summary(diet.fisher)
+print(diet.welch)
+print(diet.kruskal)
+```
+
+Note that, when the interest lies in the difference between two means, the Fisher's ANOVA (function `aov()`) and the Student's t-test (function `t.test()` with argument `var.equal` set to `TRUE`) leads to the same results.
+Let check this by comparing the mean weight losses of *Diet A* and *Diet C*. 
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
+t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
+```
+
+
+# Section 3: Model check
+
+Lets first
+
+* define the Fisher's and Welch's residuals by subtracting the mean of each group to the weight loss of the corresponding participants 
+* define the Kruskal's residual's by subtraction the median of each group to the weight loss of the corresponding participants 
+
+The mean or median of each group may be obtained by means of the function `tapply()` which allows a apply a function (like `mean` or `median`) to   and by  
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+# mean and median weight loss per group:
+mean_group   = tapply(diet$weight.loss,diet$diet.type,mean)
+median_group = tapply(diet$weight.loss,diet$diet.type,median)
+mean_group
+median_group
+# residuals:
+diet$resid.mean   = (diet$weight.loss - mean_group[as.numeric(diet$diet.type)])
+diet$resid.median = (diet$weight.loss - median_group[as.numeric(diet$diet.type)])
+diet[1:10,]
+```
+
+Then, lets 
+
+* display a boxplot of the residuals per group to assess if (i) the variance per groups are similar (ii) normality of the residuals per group seems credible
+* display a QQ-plot of the residuals of the mean model to assess if normality of the residuals seems credible
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+par(mfrow=c(1,2),mar=c(4.5,4.5,2,0)) 
+#
+boxplot(resid.mean~diet.type,data=diet,main="Residual boxplot per group",col="light gray",xlab="Diet type",ylab="Residuals")
+abline(h=0,col="blue")
+#
+col_group = rainbow(nlevels(diet$diet.type))
+qqnorm(diet$resid.mean,col=col_group[as.numeric(diet$diet.type)])
+qqline(diet$resid.mean)
+legend("top",legend=levels(diet$diet.type),col=col_group,pch=21,ncol=3,box.lwd=NA)
+```
+
+Finally, lets 
+
+* perform a Shapiro's test to assess is there is enough evidence that the residuals are not normally distributed (by means of the function `shapiro.test()`)
+* perform a Bartlett's test to assess is there is enough evidence that the residuals per group do not have different variance (by means of the function `bartlett.test()`. )
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+shapiro.test(diet$resid.mean)
+bartlett.test(diet$resid.mean~as.numeric(diet$diet.type))
+```
+
+
+# Section 4: Mutiple comparisons
+
+Lets
+
+* perform a Tukey HSD test to define which group pair(s) have different means (by means of the function `TukeyHSD()`) 
+* compare the Tukey HSD confidence interval size for the difference of means between the weight losses of *Diet A* and *Diet B* with the one obtained by means of a Student's t-test (function `t.test()` with argument `var.equal` set to `TRUE`)
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+plot(TukeyHSD(diet.fisher))
+t.test(weight.loss~diet.type,data=diet[diet$diet.type!="C",],var.equal = TRUE)
+```
+
+# Section 5: Two-way ANOVA
+
+Lets
+
+* perform a two-way ANOVA to assess if the weight loss means are different per levels of the factors _Diet_ and/or _Age_.  
+* compare the output of the function `aov()` to the one of the function `lm()`.
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+diet.fisher = aov(weight.loss~diet.type*gender,data=diet)
+summary(diet.fisher)
+
+anova(lm(weight.loss~diet.type*gender,data=diet))
+```
+
+
+# Section 5: Practicals
+
+Analyse the two following datasets with the suitable analysis:
+
+## (i) *amess.csv*
+The data for this exercise are to be found in *amess.csv*. The data are the red cell folate levels in three groups of cardiac bypass patients given different levels of nitrous oxide (N2O) and oxygen (O2) ventilation. (There is a reference to the source of this data in Altman, Practical Statistics for Medical Research, p. 208.)
+The treatments are
+
+* 50% N2O and 50% O2 continuously for 24 hours 
+* 50% N2O and 50% O2 during the operation
+* No N2O but 35-50% O2 continuously for 24 hours
+
+## (ii) *globalBreastCancerRisk.csv*
+
+The file *globalBreastCancerRisk.csv* gives the number of new cases of Breast Cancer (per population of 10,000) in various countries around the world, along with various health and lifestyle risk factors. 
+
+Let’s suppose we are initially interested in whether the number of breast cancer cases is significantly different in different regions of the world.
+
+Visualise the distribution of breast cancer incidence in each continent. Check how many observations belong to each group (continent). Are there any groups that you would consider removing/grouping before performing the analysis ? 
+
+
+
+
+        
+        
