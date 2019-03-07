@@ -46,10 +46,12 @@ The course will cover ANOVA, linear regression and some extensions. It will be a
   + Slides [PDF](simple_regression.pdf)
   + Tutorial [HTML](simple_regression.html)
   + Tutorial [R markdown](simple_regression.Rmd)
+  + Tutorial with solutions [R markdown](simple_regression+.Rmd)
 - Multiple Regression
   + Slides [PDF](multiple_regression.pdf)
   + Tutorial [HTML](multiple_regression.html)
   + Tutorial [R markdown](multiple_regression.Rmd)
+  + Tutorial with solutions [R markdown](multiple_regression+.Rmd)
 - Generalised Linear Models
   + Slides [PDF](glm.pdf)
   + Tutorial [HTML](glm.html)
