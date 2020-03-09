@@ -1,0 +1,225 @@
+---
+title: "GLM with R" 
+author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_document:
+    theme: united 
+    highlight: tango
+    code_folding: show    
+    toc: true           
+    toc_depth: 2       
+    toc_float: true     
+    fig_width: 8
+    fig_height: 6
+---
+
+
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/GLM.Rmd") --->
+
+```{r message = FALSE, warning = FALSE, echo = FALSE} 
+# change working directory: should be the directory containg the Markdown files:
+setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
+# install gamlss package
+#install.packages("gamlss")
+require("gamlss")
+```
+
+# Section 1: Logistic regression
+
+We will analyse the data collected by Jones (Unpublished BSc dissertation, University of Southampton, 1975). The aim of the study was to define if the probability of having Bronchitis is influenced by smoking and/or pollution.
+
+The data are stored under data/Bronchitis.csv and contains information on 212 participants.
+
+
+### Section 1.1: importation and descriptive analysis
+
+Lets starts by
+
+* importing the data set *Bronchitis* with the function `read.csv()`  
+* displaying _bron_ (a dichotomous variable which equals 1 for participants having bronchitis and 0 otherwise) as a function of _cigs_, the number of cigarettes smoked daily.
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+Bronchitis = read.csv("data/Bronchitis.csv",header=TRUE)
+plot(Bronchitis$cigs,Bronchitis$bron,col="blue4",
+        ylab = "Absence/Presense of Bronchitis", xlab = "Daily number of cigarettes")
+abline(h=c(0,1),col="light blue")
+```
+
+# Section 1.2: Model fit
+
+Lets 
+
+* fit a logistic model by means the function `glm()` and by means of the function `gamlss()` of the library `gamlss`.  
+* display and analyse the results of the `glm` function : Use the function `summary()` to display the results of an R object of class `glm`.
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+fit.glm = glm(bron~cigs,data=Bronchitis,family=binomial)
+
+library(gamlss)
+fit.gamlss = gamlss(bron~cigs,data=Bronchitis,family=BI)
+
+summary(fit.glm)
+```
+
+Let's now define the estimated probability of having bronchitis for any number of daily smoked cigarette and display the corresponding logistic curve on a plot:
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+plot(Bronchitis$cigs,Bronchitis$bron,col="blue4",
+        ylab = "Absence/Presense of Bronchitis", xlab = "Daily number of cigarettes")
+abline(h=c(0,1),col="light blue")
+
+axe.x = seq(0,40,length=1000)
+f.x = exp(fit.glm$coef[1]+axe.x*fit.glm$coef[2])/(1+exp(fit.glm$coef[1]+axe.x*fit.glm$coef[2]))
+lines(axe.x,f.x,col="pink2",lwd=2)
+```
+
+## Section 1.3: Model selection
+
+As for linear models, model selection may be done by means of the function `anova()` used on the glm object of interest. 
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+anova(fit.glm,test="LRT")
+```
+
+## Section 1.3: Model check
+
+Lets assess is the model fit seems satisfactory by means 
+
+* of the analysis of deviance residuals (function `plot()` on an object of class `glm`,
+* of the analysis of randomised normalised quantile residuals (function `plot()` on an object of class `gamlss`,
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# deviance
+par(mfrow=c(2,2),mar=c(3,5,3,0))
+plot(fit.glm)
+# randomised normalised quantile residuals
+plot(gamlss(bron~cigs,data=Bronchitis,family=BI))
+```
+
+## Section 1.4: Fun
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# long format:
+long = data.frame(mi = rep(c("MI","No MI"),c(104+189,11037+11034)),
+                  treatment = rep(c("Aspirin","Placebo","Aspirin","Placebo"),c(104,189,11037,11034)))
+# short format: 2 by 2 table
+table2by2 = table(long$treatment,long$mi)
+print(table2by2)
+#
+chisq.test(table2by2)
+prop.test(table2by2[,"MI"],apply(table2by2,1,sum))
+summary(glm(mi~treatment,data=long,family="binomial"))
+```
+
+
+
+
+
+
+# Section 2: Poisson regression
+
+The dataset *students.csv* shows the number of high school students diagnosed with an infectious disease for each day from the initial disease outbreak. 
+
+# Section 2.2: Importation
+
+Lets 
+
+* import the dataset by means of the function `read.csv()`
+* display the daily number of students diagnosed with the disease (variable `cases`) as a function of the days since the outbreak (variable `day`). 
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+students = read.csv("data/students.csv",header=TRUE)
+plot(students$day,students$cases,col="blue4",
+        ylab = "Number of diagnosed students", xlab = "Days since initial outbreak")
+abline(h=c(0),col="light blue")
+```
+
+# Section 2.2: Model fit
+
+Lets 
+
+* fit a poisson model by means the function `glm()` and by means of the function `gamlss()` of the library `gamlss`.  
+* display and analyse the results of the `glm` function : Use the function `summary()` to display the results of an R object of class `glm`.
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+fit.glm = glm(cases~day,data=students,family=poisson)
+
+library(gamlss)
+fit.gamlss = gamlss(cases~day,data=students,,family=PO)
+
+summary(fit.glm)
+```
+
+Let's now define the estimated probability of having bronchitis for any number of daily smoked cigarette and display the corresponding logistic curve on a plot:
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+plot(students$day,students$cases,col="blue4",
+        ylab = "Number of diagnosed students", xlab = "Days since initial outbreak")
+abline(h=c(0),col="light blue")
+
+axe.x = seq(0,120,length=1000)
+f.x = exp(fit.glm$coef[1]+axe.x*fit.glm$coef[2])
+lines(axe.x,f.x,col="pink2",lwd=2)
+```
+
+## Section 2.3: Model selection
+
+As for linear models, model selection may be done by means of the function `anova()` used on the glm object of interest. 
+
+```{r message = FALSE, warning = FALSE, echo = TRUE} 
+anova(fit.glm,test="LRT")
+```
+
+## Section 2.3: Model check
+
+Lets assess is the model fit seems satisfactory by means 
+
+* of the analysis of deviance residuals (function `plot()` on an object of class `glm`,
+* of the analysis of randomised normalised quantile residuals (function `plot()` on an object of class `gamlss`,
+
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# deviance
+par(mfrow=c(2,2),mar=c(3,5,3,0))
+plot(fit.glm)
+# randomised normalised quantile residuals
+plot(fit.gamlss)
+```
+
+
+
+# Section 6: Practicals
+
+
+### (i) *Bronchitis.csv*
+Analyse further the Bronchitis data of Jones (1975) by 
+
+* first investigating if the probability of having bronchitis also depends on _pollution_ (variable `poll`),
+* second investigating if there is an interaction between the variables `cigs` and `poll`.
+
+
+### (ii) *myocardialinfarction.csv*
+
+The file *myocardialinfarction.csv* indicates if a participant had a myocardial infarction attack (variable `infarction`) as well the participant's treatment (variable `treatment`).  
+
+Does _Aspirin_ decrease the probability to have a myocardial infarction attack ?
+
+
+### (ii) *crabs.csv*
+
+This data set is derived from Agresti (2007, Table 3.2, pp.76-77). It gives 6 variables for each of 173 female horseshoe crabs:
+
+* Explanatory variables that are thought to affect this included the female crab’s color (C), spine condition (S), weightweight (Wt)
+* C: the crab's colour,
+* S: the crab's spine condition, 
+* Wt: the crab's weight,
+* W: the crab's carapace width, 
+* Sa: the response outcome, i.e., the number of satellites. 
+
+Check if the width of female's back can explain the number of satellites attached by fitting a Poisson regression model with width.
+
+      
+        
