@@ -3,7 +3,7 @@
 
 ---
 title: "GLM with R" 
-author: "D.-L. Couturier / M. Dunning / R. Nicholls"
+author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:
@@ -19,12 +19,13 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/GLM+.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/GLM+.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/")
-
+setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/") 
+# install gamlss package
+install.packages("gamlss")
 ```
 
 # Section 1: Logistic regression
@@ -98,6 +99,21 @@ par(mfrow=c(2,2),mar=c(3,5,3,0))
 plot(fit.glm)
 # randomised normalised quantile residuals
 plot(gamlss(bron~cigs,data=Bronchitis,family=BI))
+```
+
+## Section 1.4: Fun
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# long format:
+long = data.frame(mi = rep(c("MI","No MI"),c(104+189,11037+11034)),
+                  treatment = rep(c("Aspirin","Placebo","Aspirin","Placebo"),c(104,189,11037,11034)))
+# short format: 2 by 2 table
+table2by2 = table(long$treatment,long$mi)
+
+#
+chisq.test(table2by2)
+prop.test(table2by2[,"MI"],apply(table2by2,1,sum))
+summary(glm(mi~treatment,data=long,family="binomial"))
 ```
 
 

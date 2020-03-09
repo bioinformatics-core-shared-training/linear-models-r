@@ -16,13 +16,14 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/glm.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/GLM.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
-# change working directory: should be the directory containing the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
+# change working directory: should be the directory containg the Markdown files:
+setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
 # install gamlss package
-install.packages("gamlss")
+#install.packages("gamlss")
+require("gamlss")
 ```
 
 # Section 1: Logistic regression
@@ -106,7 +107,7 @@ long = data.frame(mi = rep(c("MI","No MI"),c(104+189,11037+11034)),
                   treatment = rep(c("Aspirin","Placebo","Aspirin","Placebo"),c(104,189,11037,11034)))
 # short format: 2 by 2 table
 table2by2 = table(long$treatment,long$mi)
-
+print(table2by2)
 #
 chisq.test(table2by2)
 prop.test(table2by2[,"MI"],apply(table2by2,1,sum))

@@ -1,5 +1,7 @@
+
+
 ---
-title: "ANOVA with R" 
+title: "ANOVA with R: analysis of the *diet* dataset" 
 author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
@@ -15,12 +17,11 @@ output:
 ---
 
 
-
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/ANOVA.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/ANOVA.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
+setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
 
 ```
 
@@ -32,7 +33,7 @@ A slightly modified version is available in the data file is stored under data/d
 
 # Section 1: importation and descriptive analysis
 
-Lets start by
+Lets starts by
 
 * importing the data set *diet* with the function `read.csv()`  
 * defining a new column *weight.loss*, corresponding to the difference between the initial and final weights (respectively the corresponding to the columns `initial.weight` and `final.weight` of the dataset) 
@@ -64,7 +65,7 @@ print(diet.welch)
 print(diet.kruskal)
 ```
 
-Note that, when the interest lies in the difference between two means, the Fisher's ANOVA (function `aov()`) and the Student's t-test (function `t.test()` with argument `var.equal` set to `TRUE`) leads to the same results.
+Note that, when the interest lies in the difference between two means, the Fisher's ANOVA (fonction `aov()`) and the Student's t-test (function `t.test()` with argument `var.equal` set to `TRUE`) leads to the same results.
 Let check this by comparing the mean weight losses of *Diet A* and *Diet C*. 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
 summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
