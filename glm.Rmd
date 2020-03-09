@@ -1,3 +1,6 @@
+
+
+
 ---
 title: "GLM with R" 
 author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
