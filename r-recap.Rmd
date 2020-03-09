@@ -1,6 +1,6 @@
 ---
 title: "Recap of Statistical Analysis in R"
-author: Dominique-Laurent Couturier, Mark Dunning, Rob Nicholls, Mark Fernandes
+author: Mark Fernandes, Dominique-Laurent Couturier, Rob Nicholls 
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_notebook:
