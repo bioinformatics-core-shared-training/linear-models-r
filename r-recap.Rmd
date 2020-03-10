@@ -1,3 +1,4 @@
+
 ---
 title: "Recap of Statistical Analysis in R"
 author: Mark Fernandes, Dominique-Laurent Couturier, Rob Nicholls 
@@ -7,6 +8,8 @@ output:
     toc: yes
     toc_float: yes
 ---
+
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/r-recap.Rmd") --->
 
 # Introduction
 
