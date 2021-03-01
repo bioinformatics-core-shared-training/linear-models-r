@@ -1,6 +1,3 @@
-
-
-
 ---
 title: "GLM with R" 
 author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
@@ -19,14 +16,14 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/GLM.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/GLM.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
-# install gamlss package
-#install.packages("gamlss")
-require("gamlss")
+# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/")
+
+# install gamlss package if needed
+    # install.packages("gamlss")
 ```
 
 # Section 1: Logistic regression
@@ -110,16 +107,12 @@ long = data.frame(mi = rep(c("MI","No MI"),c(104+189,11037+11034)),
                   treatment = rep(c("Aspirin","Placebo","Aspirin","Placebo"),c(104,189,11037,11034)))
 # short format: 2 by 2 table
 table2by2 = table(long$treatment,long$mi)
-print(table2by2)
+
 #
 chisq.test(table2by2)
 prop.test(table2by2[,"MI"],apply(table2by2,1,sum))
-summary(glm(mi~treatment,data=long,family="binomial"))
+summary(glm(I(mi=="MI")~treatment,data=long,family="binomial"))
 ```
-
-
-
-
 
 
 # Section 2: Poisson regression

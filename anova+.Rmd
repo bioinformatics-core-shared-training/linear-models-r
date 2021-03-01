@@ -20,7 +20,7 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
+# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/")
 
 ```
 
@@ -42,6 +42,8 @@ Lets starts by
 ```{r message = FALSE, warning = FALSE, echo = TRUE} 
 diet = read.csv("data/diet.csv",row.names=1)
 diet$weight.loss = diet$initial.weight - diet$final.weight 
+diet$diet.type   = factor(diet$diet.type,levels=c("A","B","C"))
+diet$gender      = factor(diet$gender,levels=c("Female","Male"))
 boxplot(weight.loss~diet.type,data=diet,col="light gray",
         ylab = "Weight loss (kg)", xlab = "Diet type")
 abline(h=0,col="blue")
@@ -210,7 +212,8 @@ Visualise the distribution of breast cancer incidence in each continent. Check h
 
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE} 
-breastcancer = read.csv("data/globalBreastCancerRisk.csv")
+breastcancer = read.csv("data/globalBreastCancerRisk.csv",row.names=1)
+breastcancer$continent = factor(breastcancer$continent)
 
 boxplot(NewCasesOfBreastCancerIn2002~continent,data=breastcancer,col="light gray")
 table(breastcancer$continent)

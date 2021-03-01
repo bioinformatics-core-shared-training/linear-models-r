@@ -23,9 +23,10 @@ output:
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-setwd("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/") 
-# install gamlss package
-install.packages("gamlss")
+# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20200310/Practicals/")
+
+# install gamlss package if needed
+    # install.packages("gamlss")
 ```
 
 # Section 1: Logistic regression
@@ -113,7 +114,7 @@ table2by2 = table(long$treatment,long$mi)
 #
 chisq.test(table2by2)
 prop.test(table2by2[,"MI"],apply(table2by2,1,sum))
-summary(glm(mi~treatment,data=long,family="binomial"))
+summary(glm(I(mi=="MI")~treatment,data=long,family="binomial"))
 ```
 
 
@@ -276,7 +277,7 @@ Lets (i) import the dataset, (ii) change the levels of the factor `treatment` so
 myocardialinfarction = read.csv("data/myocardialinfarction.csv")
 # by default, Aspirin is the reference group as the alphabetic order is used
 myocardialinfarction$treatment = factor(myocardialinfarction$treatment,
-                                         levels=levels(myocardialinfarction$treatment)[2:1])
+                                         levels=c("Placebo","Aspirin"))
 # plot
 par(mfrow=c(1,1),mar=c(3,4,3,1))
 pi.group =  tapply(myocardialinfarction$infarction=="attack",myocardialinfarction$treatment,mean)
@@ -379,6 +380,11 @@ plot(gamlss(Sa~W,data=crabs,family=PO))
 plot(gamlss(Sa~W,data=crabs,family=PO))
 
     # confirm lack of fit -> bin the estimates
+    
+# 2 alternative models
+plot(gamlss(Sa~W,data=crabs,family=ZIP))
+plot(gamlss(Sa~W,data=crabs,family=NBI))
+    # check ?ZIP and ?NBI for detail       
 ```
 Reasonably, there is a lack of fit> the estimates are not to be trusted.
 
