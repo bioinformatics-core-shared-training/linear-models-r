@@ -19,11 +19,11 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/multiple_regression.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+#setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
 
 ```
 

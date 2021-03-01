@@ -19,11 +19,11 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20170719/Practicals/simple_regression.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/simple_regression+.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-#setwd("~/courses/cruk/LinearModelAndExtensions/20180510/Practicals/")
+#setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/")
 
 ```
 
@@ -197,6 +197,8 @@ In the ANOVA session we looked at the `diet` dataset, and performed the t-test a
 # import
 diet = read.csv("data/diet.csv",row.names=1)
 diet$weight.loss = diet$initial.weight - diet$final.weight 
+diet$diet.type   = factor(diet$diet.type,levels=c("A","B","C"))
+diet$gender      = factor(diet$gender,levels=c("Female","Male"))
 # comparison
 t.test(weight.loss~diet.type,data=diet[diet$diet.type!="B",],var.equal = TRUE)
 summary(aov(weight.loss~diet.type,data=diet[diet$diet.type!="B",]))
