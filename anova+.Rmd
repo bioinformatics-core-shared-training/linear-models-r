@@ -16,11 +16,11 @@ output:
 
 
 
-<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/ANOVA+.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210514/Practicals/ANOVA+.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/")
+# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210514/Practicals/")
 
 ```
 

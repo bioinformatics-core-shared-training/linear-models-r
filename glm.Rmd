@@ -16,11 +16,11 @@ output:
 
 
 
-<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/GLM.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210514/Practicals/GLM.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
-# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210312/Practicals/")
+# setwd("/Volumes/Files/courses/cruk/LinearModelAndExtensions/20210514/Practicals/")
 
 # install gamlss package if needed
     # install.packages("gamlss")
