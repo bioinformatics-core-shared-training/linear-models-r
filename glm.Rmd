@@ -16,7 +16,7 @@ output:
 
 
 
-<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/glm.Rmd") --->
+<!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/glm.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
