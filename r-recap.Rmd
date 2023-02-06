@@ -1,7 +1,7 @@
 
 ---
 title: "Recap of Statistical Analysis in R"
-author: Mark Fernandes, Dominique-Laurent Couturier, Rob Nicholls 
+author: Chandra Chilamakuri, Dominique-Laurent Couturier, Rob Nicholls 
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_notebook:
@@ -10,6 +10,7 @@ output:
 ---
 
 <!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/20200310/Practicals/r-recap.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/r-recap.Rmd") --->
 
 # Introduction
 

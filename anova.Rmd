@@ -2,7 +2,7 @@
 
 ---
 title: "ANOVA with R: analysis of the *diet* dataset" 
-author: "D.-L. Couturier / R. Nicholls / M. Fernandes "
+author: "D.-L. Couturier / R. Nicholls / C. Chilamakuri"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   html_document:
@@ -18,6 +18,7 @@ output:
 
 
 <!--- rmarkdown::render("~/courses/cruk/LinearModelAndExtensions/git_linear-models-r/anova.Rmd") --->
+<!--- rmarkdown::render("/Volumes/Files/courses/cruk/LinearModelAndExtensions/git_linear-models-r/anova.Rmd") --->
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE} 
 # change working directory: should be the directory containg the Markdown files:
